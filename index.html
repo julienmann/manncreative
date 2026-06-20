@@ -13,7 +13,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mann Photography</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="sport%20examples/web-optimized/IMG_2018.webp" fetchpriority="high" type="image/webp">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 
@@ -153,6 +155,7 @@ hr{border:none;border-top:1px solid var(--rule);margin:0;}
 }
 .hero-img{
   position:absolute;top:0;right:0;width:40vw;height:100%;
+  aspect-ratio:1135/1280;
   z-index:0;overflow:hidden;
   clip-path:polygon(18% 0,100% 0,100% 100%,0% 100%);
 }
@@ -766,7 +769,7 @@ footer{
 
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-img" aria-hidden="true"><img src="sport%20examples/web/IMG_2018.jpg" alt="" loading="eager"></div>
+  <div class="hero-img" aria-hidden="true"><picture><source srcset="sport%20examples/web-optimized/IMG_2018.webp" type="image/webp"><img src="sport%20examples/web-optimized/IMG_2018.jpg" alt="" loading="eager" fetchpriority="high" width="1135" height="1280"></picture></div>
   <p class="hero-kicker" data-i18n="hero.kicker">Montréal</p>
   <h1 class="hero-title">
     <div class="hero-title-bottom">
@@ -809,7 +812,7 @@ footer{
       <div class="about-sig">— Julien Mann</div>
     </div>
     <div class="about-right reveal">
-      <div class="about-accent-img" aria-hidden="true"><img src="people%20examples/web/DSCF8359.jpg" alt="" loading="lazy"></div>
+      <div class="about-accent-img" aria-hidden="true"><picture><source srcset="people%20examples/web-optimized/DSCF8359.webp" type="image/webp"><img src="people%20examples/web-optimized/DSCF8359.jpg" alt="" loading="lazy" width="1280" height="720"></picture></div>
       <div class="stats-grid">
         <div class="stat-box">
           <span class="stat-num counter" data-target="3">0</span>
@@ -831,9 +834,9 @@ footer{
 <!-- FEATURED STRIP -->
 <section id="featured-strip" class="reveal">
   <div class="featured-strip-grid">
-    <div class="featured-img featured-img-a"><img src="sport%20examples/web/DSCF4981.jpg" alt="" loading="lazy"></div>
-    <div class="featured-img featured-img-b"><img src="event%20examples/web/DSCF9492.jpg" alt="" loading="lazy"></div>
-    <div class="featured-img featured-img-c"><img src="people%20examples/web/DSCF2981.jpg" alt="" loading="lazy"></div>
+    <div class="featured-img featured-img-a"><picture><source srcset="sport%20examples/web-optimized/DSCF4981.webp" type="image/webp"><img src="sport%20examples/web-optimized/DSCF4981.jpg" alt="" loading="lazy" width="1280" height="1021"></picture></div>
+    <div class="featured-img featured-img-b"><picture><source srcset="event%20examples/web-optimized/DSCF9492.webp" type="image/webp"><img src="event%20examples/web-optimized/DSCF9492.jpg" alt="" loading="lazy" width="1280" height="854"></picture></div>
+    <div class="featured-img featured-img-c"><picture><source srcset="people%20examples/web-optimized/DSCF2981.webp" type="image/webp"><img src="people%20examples/web-optimized/DSCF2981.jpg" alt="" loading="lazy" width="720" height="1280"></picture></div>
   </div>
 </section>
 
@@ -872,12 +875,12 @@ footer{
     </div>
     <div class="tab-gallery">
       <div class="gallery-grid">
-        <div class="gallery-thumb"><img src="people%20examples/web/DSCF2055.jpg" alt="People example" loading="lazy"></div>
-        <div class="gallery-thumb"><img src="people%20examples/web/DSCF2963.jpg" alt="People example" loading="lazy"></div>
-        <div class="gallery-thumb"><img src="people%20examples/web/DSCF2981.jpg" alt="People example" loading="lazy"></div>
-        <div class="gallery-thumb"><img src="people%20examples/web/DSCF7999.jpg" alt="People example" loading="lazy"></div>
-        <div class="gallery-thumb"><img src="people%20examples/web/DSCF8359.jpg" alt="People example" loading="lazy"></div>
-        <div class="gallery-thumb"><img src="people%20examples/web/DSCF8578%20copy.jpg" alt="People example" loading="lazy"></div>
+        <div class="gallery-thumb"><picture><source srcset="people%20examples/web-optimized/DSCF2055.webp" type="image/webp"><img src="people%20examples/web-optimized/DSCF2055.jpg" alt="People example" loading="lazy" width="720" height="1280"></picture></div>
+        <div class="gallery-thumb"><picture><source srcset="people%20examples/web-optimized/DSCF2963.webp" type="image/webp"><img src="people%20examples/web-optimized/DSCF2963.jpg" alt="People example" loading="lazy" width="720" height="1280"></picture></div>
+        <div class="gallery-thumb"><picture><source srcset="people%20examples/web-optimized/DSCF2981.webp" type="image/webp"><img src="people%20examples/web-optimized/DSCF2981.jpg" alt="People example" loading="lazy" width="720" height="1280"></picture></div>
+        <div class="gallery-thumb"><picture><source srcset="people%20examples/web-optimized/DSCF7999.webp" type="image/webp"><img src="people%20examples/web-optimized/DSCF7999.jpg" alt="People example" loading="lazy" width="1280" height="720"></picture></div>
+        <div class="gallery-thumb"><picture><source srcset="people%20examples/web-optimized/DSCF8359.webp" type="image/webp"><img src="people%20examples/web-optimized/DSCF8359.jpg" alt="People example" loading="lazy" width="1280" height="720"></picture></div>
+        <div class="gallery-thumb"><picture><source srcset="people%20examples/web-optimized/DSCF8578%20copy.webp" type="image/webp"><img src="people%20examples/web-optimized/DSCF8578%20copy.jpg" alt="People example" loading="lazy" width="1280" height="854"></picture></div>
       </div>
     </div>
   </div>
@@ -902,12 +905,12 @@ footer{
     </div>
     <div class="tab-gallery">
       <div class="gallery-grid">
-        <div class="gallery-thumb"><img src="event%20examples/web/DSCF0115%20copy.jpg" alt="Event example" loading="lazy"></div>
-        <div class="gallery-thumb"><img src="event%20examples/web/DSCF0433%20copy.jpg" alt="Event example" loading="lazy"></div>
-        <div class="gallery-thumb"><img src="event%20examples/web/DSCF9492.jpg" alt="Event example" loading="lazy"></div>
-        <div class="gallery-thumb"><img src="event%20examples/web/DSCF9757.jpg" alt="Event example" loading="lazy"></div>
-        <div class="gallery-thumb"><img src="event%20examples/web/DSCF9794%20copy.jpg" alt="Event example" loading="lazy"></div>
-        <div class="gallery-thumb"><img src="event%20examples/web/DSCF0605%20copy.jpg" alt="Event example" loading="lazy"></div>
+        <div class="gallery-thumb"><picture><source srcset="event%20examples/web-optimized/DSCF0115%20copy.webp" type="image/webp"><img src="event%20examples/web-optimized/DSCF0115%20copy.jpg" alt="Event example" loading="lazy" width="1280" height="854"></picture></div>
+        <div class="gallery-thumb"><picture><source srcset="event%20examples/web-optimized/DSCF0433%20copy.webp" type="image/webp"><img src="event%20examples/web-optimized/DSCF0433%20copy.jpg" alt="Event example" loading="lazy" width="1280" height="853"></picture></div>
+        <div class="gallery-thumb"><picture><source srcset="event%20examples/web-optimized/DSCF9492.webp" type="image/webp"><img src="event%20examples/web-optimized/DSCF9492.jpg" alt="Event example" loading="lazy" width="1280" height="854"></picture></div>
+        <div class="gallery-thumb"><picture><source srcset="event%20examples/web-optimized/DSCF9757.webp" type="image/webp"><img src="event%20examples/web-optimized/DSCF9757.jpg" alt="Event example" loading="lazy" width="1280" height="854"></picture></div>
+        <div class="gallery-thumb"><picture><source srcset="event%20examples/web-optimized/DSCF9794%20copy.webp" type="image/webp"><img src="event%20examples/web-optimized/DSCF9794%20copy.jpg" alt="Event example" loading="lazy" width="1280" height="854"></picture></div>
+        <div class="gallery-thumb"><picture><source srcset="event%20examples/web-optimized/DSCF0605%20copy.webp" type="image/webp"><img src="event%20examples/web-optimized/DSCF0605%20copy.jpg" alt="Event example" loading="lazy" width="853" height="1280"></picture></div>
       </div>
     </div>
   </div>
@@ -932,12 +935,12 @@ footer{
     </div>
     <div class="tab-gallery">
       <div class="gallery-grid">
-        <div class="gallery-thumb"><img src="sport%20examples/web/DSCF4764.jpg" alt="Sport example" loading="lazy"></div>
-        <div class="gallery-thumb"><img src="sport%20examples/web/DSCF4981.jpg" alt="Sport example" loading="lazy"></div>
-        <div class="gallery-thumb"><img src="sport%20examples/web/DSCF5056.jpg" alt="Sport example" loading="lazy"></div>
-        <div class="gallery-thumb"><img src="sport%20examples/web/DSCF6163.jpg" alt="Sport example" loading="lazy"></div>
-        <div class="gallery-thumb"><img src="sport%20examples/web/IMG_2018.jpg" alt="Sport example" loading="lazy"></div>
-        <div class="gallery-thumb"><img src="sport%20examples/web/IMG_2042.jpg" alt="Sport example" loading="lazy"></div>
+        <div class="gallery-thumb"><picture><source srcset="sport%20examples/web-optimized/DSCF4764.webp" type="image/webp"><img src="sport%20examples/web-optimized/DSCF4764.jpg" alt="Sport example" loading="lazy" width="720" height="1280"></picture></div>
+        <div class="gallery-thumb"><picture><source srcset="sport%20examples/web-optimized/DSCF4981.webp" type="image/webp"><img src="sport%20examples/web-optimized/DSCF4981.jpg" alt="Sport example" loading="lazy" width="1280" height="1021"></picture></div>
+        <div class="gallery-thumb"><picture><source srcset="sport%20examples/web-optimized/DSCF5056.webp" type="image/webp"><img src="sport%20examples/web-optimized/DSCF5056.jpg" alt="Sport example" loading="lazy" width="720" height="1280"></picture></div>
+        <div class="gallery-thumb"><picture><source srcset="sport%20examples/web-optimized/DSCF6163.webp" type="image/webp"><img src="sport%20examples/web-optimized/DSCF6163.jpg" alt="Sport example" loading="lazy" width="720" height="1280"></picture></div>
+        <div class="gallery-thumb"><picture><source srcset="sport%20examples/web-optimized/IMG_2018.webp" type="image/webp"><img src="sport%20examples/web-optimized/IMG_2018.jpg" alt="Sport example" loading="lazy" width="1135" height="1280"></picture></div>
+        <div class="gallery-thumb"><picture><source srcset="sport%20examples/web-optimized/IMG_2042.webp" type="image/webp"><img src="sport%20examples/web-optimized/IMG_2042.jpg" alt="Sport example" loading="lazy" width="1280" height="854"></picture></div>
       </div>
     </div>
   </div>
