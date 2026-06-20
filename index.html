@@ -844,7 +844,7 @@ footer{
     <span class="section-num">02 / 04</span>
   </div>
 
-  <div class="tabs-row" id="tabs-row">
+  <div class="tabs-row">
     <button class="tab-btn active" data-tab="sport" data-i18n="services.tab.sport">Sport</button>
     <button class="tab-btn" data-tab="events" data-i18n="services.tab.events">Events</button>
     <button class="tab-btn" data-tab="portraits" data-i18n="services.tab.portraits">People</button>
@@ -1191,7 +1191,7 @@ function animCounter(el){
   let cur=0;
   const t=setInterval(()=>{
     cur=Math.min(cur+inc,target);
-    el.textContent=Math.floor(cur)+(target>=100?'+':'+');
+    el.textContent=Math.floor(cur)+'+';
     if(cur>=target)clearInterval(t);
   },step);
 }
@@ -1407,16 +1407,6 @@ document.getElementById('lang-toggle').addEventListener('click', () => {
 });
 
 
-document.querySelectorAll('.tab-gallery').forEach(gallery=>{
-  const grid=gallery.querySelector('.gallery-grid');
-  if(!grid) return;
-  const note=document.createElement('p');
-  note.className='gallery-note visible';
-  note.setAttribute('data-i18n','gallery.note');
-  note.textContent='More examples available on request.';
-  gallery.appendChild(note);
-});
-
 // ── LIGHTBOX ──
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
@@ -1455,6 +1445,14 @@ document.addEventListener('keydown', e => {
 });
 
 document.querySelectorAll('.tab-gallery').forEach(gallery => {
+  const grid = gallery.querySelector('.gallery-grid');
+  if (grid) {
+    const note = document.createElement('p');
+    note.className = 'gallery-note visible';
+    note.setAttribute('data-i18n', 'gallery.note');
+    note.textContent = 'More examples available on request.';
+    gallery.appendChild(note);
+  }
   const thumbs = gallery.querySelectorAll('.gallery-thumb img');
   const srcs = Array.from(thumbs).map(img => img.src);
   thumbs.forEach((img, i) => {
