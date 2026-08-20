@@ -99,6 +99,8 @@ Three typefaces carry three entirely distinct roles: Bebas Neue is the wall voic
 - Hierarchy through 1px hairline rules, never through shadow depth
 - Five accent colors — one structural (Darkroom Amber) plus one per service vertical (Sport, Events, People, Commercial) — each individually capped at ≤10% of any screen, collectively still a minority of any view
 - Example photography shown in full color at all times — no grayscale-at-rest treatment — so the work itself supplies the system's richest color
+- Photographs recur throughout the page, not only inside the service galleries: a contact sheet under the hero, two full-bleed moving bands, a quote plate, a staggered featured spread
+- Every frame carries a 1px inset hairline so dark photographs keep their edges against the black field
 - Bilingual EN/FR with equal treatment of both languages
 
 ## 2. Colors: The Darkroom Palette
@@ -153,12 +155,15 @@ This system is flat by default, with one deliberate exception.
 
 All surface hierarchy is expressed through 1px hairline rules (`border: 1px solid rgba(--fg, 0.15)`) and background tonal steps (Void Black → Contact Shadow). No box-shadow for structural depth, no z-axis layering for content. A stat box is distinguished from its container by a shared hairline grid, not by a raised surface.
 
-The hover preview card (`.work-item:hover` floating thumbnail) floats at z-index 400, implying depth through position alone with no shadow. Two further exceptions exist, both scoped to a single editorial moment rather than general UI: the **About accent photo** (a small overlapping print, rotated and shadowed, breaking out of the stats grid) and the **Featured Strip** middle image (elevated above its neighbors in the three-image spread between About and Services). In all three cases the lift is contextual and ephemeral — it marks a deliberate "photograph as object" moment, not a permanent UI surface state.
+The hover preview card (`.work-item:hover` floating thumbnail) floats at z-index 400, implying depth through position alone with no shadow. Two further exceptions exist, both scoped to a single editorial moment rather than general UI: the **About accent photos** (two small overlapping prints, rotated and shadowed — one breaking over the column rule above the stats grid, one over the bottom-left corner of the About figure) and the **Featured Strip** middle image (elevated above its neighbours in the five-image spread between About and Services). In all three cases the lift is contextual and ephemeral — it marks a deliberate "photograph as object" moment, not a permanent UI surface state.
+
+Both About prints anchor to a real element — a grid, a figure — never to the bottom of a stretched column. A print floating in leftover space reads as a layout accident, not an object.
 
 ### Shadow Vocabulary
 - **Amber Nav Underlighting** (`box-shadow: 0 1px 0 0 rgba(196,146,42,0.25)`): Applied to the fixed navigation only. Not a depth signal — a structural accent that grounds the nav against the page surface.
 - **Lightbox Image Outline** (`box-shadow: 0 0 60px rgba(0,0,0,0.6)` + `outline: 2px solid rgba(255,255,255,0.8)`): Isolates the lightbox photograph in the overlay. Functional, not decorative.
-- **Photo-Object Lift** (`box-shadow: 0 14px 32px rgba(0,0,0,0.35)` on the About accent image; `0 18px 40px rgba(0,0,0,0.4)` on the Featured Strip's middle image): Used only on photographs presented as physical, overlapping prints — never on cards, containers, or UI chrome.
+- **Photo-Object Lift** (`box-shadow: 0 14px 32px rgba(0,0,0,0.35)` on the About accent images; `0 18px 40px rgba(0,0,0,0.4)` on the Featured Strip's middle image): Used only on photographs presented as physical, overlapping prints — never on cards, containers, or UI chrome.
+- **Frame Edge** (`outline: 1px solid var(--rule); outline-offset: -1px`): Not a shadow at all — the hairline every photographic frame carries on its inside edge, so a dark photograph doesn't dissolve into the black field. Applied to gallery thumbs, band frames, hero sheet frames, contact strip frames, featured frames, and the About figure. It replaces elevation entirely for photographs that are not Photo-Object Lifts.
 
 ### Named Rules
 **The Hairline Rule.** Hierarchy comes from 1px rule lines and typographic scale — never from elevated surfaces or drop shadows on UI elements. The Photo-Object Lift exceptions above are the only places a photograph itself is allowed to cast a shadow; depth is earned, not decorative, and remains rare.
@@ -202,6 +207,10 @@ Open, newspaper-style. No box, no fill, no radius.
 - **Textarea:** Same treatment. Fixed height 5rem, no resize handle.
 - **Select:** Appearance reset, monospace, 0.68rem, letter-spacing 0.12em. Silver Gelatin at rest.
 
+### Section Numeral
+
+The `NN / 04` marker in each section header is Bebas Neue at `clamp(2.5rem, 6vw, 6rem)`, drawn as an outline — `color: transparent` with `-webkit-text-stroke: 1px var(--rule)`, guarded by an `@supports` query that leaves it solid Silver Gelatin where text-stroke is unavailable. It is a structural watermark, not a label: never filled, never colored, never below Bebas title scale.
+
 ### Navigation
 
 Fixed header, auto-hides on scroll-down (returns on scroll-up).
@@ -214,15 +223,42 @@ Fixed header, auto-hides on scroll-down (returns on scroll-up).
 
 ### Gallery Grid
 
-A masonry layout on a 6-column track (`grid-auto-rows: 90px`, `grid-auto-flow: dense`), not a uniform 1:1 grid. Each thumbnail takes one of four spans:
-- **Default:** 1 column × 4 rows.
-- **`.is-wide`:** 2 columns × 4 rows.
-- **`.is-tall`:** 1 column × 6 rows.
-- **`.is-feature`:** 3 columns × 7 rows — one per gallery, the lead image.
-- **Tablet (≤900px):** 3-column track; `.is-feature` spans all 3 columns.
-- **Mobile (≤480px):** 2-column track; `.is-wide`/`.is-feature` span both columns.
-- **Image treatment:** Full color at all times — no grayscale filter. 5% scale-up on hover (`transform: scale(1.05)`). Transition 0.4s ease.
+A composed spread on a 6-column track, not a uniform grid and not a masonry flow. Six frames per vertical resolve into an exact rectangle — no ragged edge, no holes:
+- **`.is-feature`:** `grid-column: 1/5; grid-row: 1/3` — the lead frame, spanning both rows of the upper block. No aspect-ratio of its own; it takes its height from the pair beside it.
+- **`.is-stack`:** `grid-column: 5/7`, aspect-ratio 4:3 — two of them, stacked in the right two columns beside the lead.
+- **`.is-third`:** `span 2`, aspect-ratio 3:2 — three of them across the row underneath.
+- **Tablet/mobile (≤900px):** two columns. The lead goes full width at 4:3, the middle four sit two-up at 4:3, and the last frame closes full width at 2:1.
+- **Image treatment:** Full color at all times — no grayscale filter. `object-fit: cover` inside the frame; 5% scale-up on hover. Frame Edge hairline on every thumb.
+- **Frame metadata** (`.frame-meta`): a contact-sheet annotation, not a caption card. Bottom-anchored, IBM Plex Mono 0.55rem / 0.22em uppercase over a black-to-transparent scrim (functional legibility, never an accent fill). Left slot is a three-letter vertical code and frame number — `SPT · 03`, `EVT · 01`, `PPL · 05`, `SEL · 02` — deliberately language-neutral so it needs no translation. Right slot is the localized "View +". Fades in on hover; always visible on `hover: none` devices.
 - **Lightbox:** Black overlay (`rgba(0,0,0,0.92)`), full keyboard navigation (arrows, escape). Image outline: `outline: 2px solid rgba(255,255,255,0.8)`.
+
+### Photo Band
+
+A full-bleed contact sheet in motion — the one component that breaks the 1600px measure. One runs after the hero, one before Contact, in opposite directions.
+
+- **Structure:** A hairline header row (label + frame count, both mono 0.58rem / 0.28em uppercase in Silver Gelatin) over an `overflow: hidden` viewport holding the track. The label lives in the header, never floated over a photograph.
+- **Motion:** `translateX(0 → -50%)` over 75s linear, infinite. The track's children are cloned once in JS so the loop is seamless; clones carry `aria-hidden` and `data-clone`, take no tab stop, and resolve to the original frame's index when clicked.
+- **Direction:** `data-dir="reverse"` flips the second band.
+- **Pause:** on hover and on focus-within.
+- **Frames:** height `clamp(140px, 17vw, 240px)`; landscape frames run 1.45× that height wide, `.is-portrait` frames 0.72×.
+- **Reduced motion:** animation off, band becomes `overflow-x: auto` — a contact sheet you scroll by hand.
+
+### Interstitial
+
+A full-bleed photographic plate carrying one line of Playfair italic, placed between Services and Process.
+
+- **Height:** `clamp(380px, 62vh, 640px)`; `clamp(320px, 52vh, 460px)` under 900px.
+- **Scrim:** `linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0.45) 48%, rgba(0,0,0,0.15))` — the minimum needed to hold white text at AA over any frame.
+- **Type:** Playfair Display italic, `clamp(1.5rem, 3.6vw, 3rem)`, max 22ch, white in both modes. This is a photographic plate, not a page surface — it does not invert with the theme.
+- **Parallax:** the image sits in a `inset: -12% 0` box and translates ±8% on scroll, rAF-throttled. Disabled outright under `prefers-reduced-motion`.
+
+### Hero Contact Sheet
+
+Six frames in a 6-column row directly under the hero's bottom rule — evidence before a single line of body copy. Frame height `clamp(72px, 7.5vw, 116px)`, mono index (`01`–`06`) in the top-left corner at `mix-blend-mode: difference`. Under 900px it drops to three frames. The hero photograph's bottom edge is pinned to the top of this row (`bottom: calc(3.5rem + var(--sheet-h))`) so the image never bleeds past it.
+
+### Featured Strip
+
+Five frames between About and Services, bottom-aligned in layout and knocked off that line with `transform: translateY()` — never with margins, which would only inflate the row. The middle frame is the anchor: widest column, tallest ratio, and the one Photo-Object Lift. Captions sit under each frame in the same three-letter contact-sheet code as the galleries. Below 900px the offsets are removed and the strip becomes a plain two-up sheet.
 
 ### Hover Preview Card
 
@@ -247,6 +283,10 @@ The system's one lifted element.
 - **Do** match letter-spacing to functional role: 0.2em or more for uppercase labels; near-zero or negative for Bebas headlines.
 - **Do** apply `prefers-reduced-motion` media query to all entrance animations and transitions.
 - **Do** run both EN and FR through any new copy — the site is bilingual with full parity.
+- **Do** give every photographic frame the Frame Edge hairline. A dark photograph without one has no boundary on a black field.
+- **Do** keep frame annotations language-neutral where a three-letter code will do (`SPT`, `EVT`, `PPL`, `SEL`) — it reads as a photographer's shorthand and spares the translation table.
+- **Do** anchor overlapping prints to a real element — a grid, a figure, a frame edge. Never to the bottom of a stretched column.
+- **Do** offset editorial frames with `transform: translateY()`, and give the section the padding to absorb it.
 
 ### Don't:
 - **Don't** use any accent color — amber or vertical — as a fill, a hover background, or a gradient component. The moment one fills a surface, the system loses its precision.
@@ -259,3 +299,6 @@ The system's one lifted element.
 - **Don't** use gradient text (`background-clip: text`). Typography uses a single solid color.
 - **Don't** use side-stripe left borders as accent treatments on any list item, card, or callout. The accent appears as bottom-border on tabs and as rule lines — never as a left-side stripe.
 - **Don't** add Bebas Neue below title scale. Using it at 12px or 14px destroys the typeface's character and looks like fallback font styling.
+- **Don't** float a band or plate label over a photograph and hope blend modes save it. Labels belong on a hairline header row.
+- **Don't** let a photo band animate under `prefers-reduced-motion` — it becomes a hand-scrolled sheet, not a paused one.
+- **Don't** present work from one vertical as another's. The Commercial tab shows selected frames under an explicit "full commercial portfolio on request" line rather than relabelling event or sport work.

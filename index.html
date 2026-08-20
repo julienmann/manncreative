@@ -143,6 +143,7 @@ hr{border:none;border-top:1px solid var(--rule);margin:0;}
 
 /* ── HERO ── */
 #hero{
+  --sheet-h:clamp(72px,7.5vw,116px);
   min-height:100vh;display:flex;flex-direction:column;
   justify-content:flex-end;
   padding:calc(60px + 4vw) 3rem 3.5rem;
@@ -150,12 +151,13 @@ hr{border:none;border-top:1px solid var(--rule);margin:0;}
   position:relative;
   isolation:isolate;
 }
-.hero-img img,.about-accent-img img,.featured-img img,.gallery-thumb img{
+.hero-img img,.about-accent-img img,.featured-img img{
   width:100%;height:100%;object-fit:cover;display:block;
 }
 .hero-img{
-  position:absolute;top:0;right:0;width:40vw;height:100%;
-  aspect-ratio:1135/1280;
+  /* stops exactly at the top edge of the contact sheet below */
+  position:absolute;top:0;right:0;width:40vw;
+  bottom:calc(3.5rem + var(--sheet-h));
   z-index:0;overflow:hidden;
   clip-path:polygon(18% 0,100% 0,100% 100%,0% 100%);
 }
@@ -165,7 +167,7 @@ hr{border:none;border-top:1px solid var(--rule);margin:0;}
 }
 .hero-img::after{
   content:'';position:absolute;inset:0;
-  background:linear-gradient(to bottom,transparent 45%,var(--bg) 100%);
+  background:linear-gradient(to bottom,transparent 32%,var(--bg) 97%);
 }
 .hero-kicker,.hero-title,.hero-bottom{position:relative;z-index:1;}
 .hero-kicker{
@@ -257,20 +259,47 @@ hr{border:none;border-top:1px solid var(--rule);margin:0;}
   color:var(--mid);line-height:2;
 }
 
+/* hero contact sheet — the first evidence, before a single word of copy */
+.hero-sheet{
+  position:relative;z-index:1;
+  display:grid;grid-template-columns:repeat(6,1fr);
+  gap:.4rem;margin-top:2.25rem;
+}
+.hero-sheet-frame{
+  position:relative;overflow:hidden;
+  height:var(--sheet-h);
+}
+.hero-sheet-frame img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;}
+.hero-sheet-frame:hover img{transform:scale(1.06);}
+.hero-sheet-index{
+  position:absolute;top:.35rem;left:.4rem;z-index:1;
+  font-size:.55rem;letter-spacing:.18em;color:#fff;
+  mix-blend-mode:difference;pointer-events:none;
+}
+
 /* ── SECTION STRUCTURE ── */
 .section-header{
-  display:flex;justify-content:space-between;align-items:baseline;
+  display:flex;justify-content:space-between;align-items:flex-end;
   padding:1.2rem 3rem 1rem;
   max-width:1600px;margin:0 auto;
+  gap:2rem;
 }
 .section-label{
   font-family:var(--bebas);font-size:2rem;letter-spacing:.12em;text-transform:uppercase;color:var(--fg);
   border-bottom:2px solid var(--accent);padding-bottom:.15rem;
 }
 .section-num{
-  font-family:var(--bebas);font-size:1rem;letter-spacing:.1em;color:var(--light);
-  /* visible in dark mode as bright; trick: invert */
+  font-family:var(--bebas);
+  font-size:clamp(2.5rem,6vw,6rem);
+  letter-spacing:.02em;line-height:.72;
   color:var(--mid);
+  user-select:none;
+}
+@supports((-webkit-text-stroke:1px #000) or (text-stroke:1px #000)){
+  .section-num{
+    color:transparent;
+    -webkit-text-stroke:1px var(--rule);
+  }
 }
 .section-container{padding:0 3rem;max-width:1600px;margin:0 auto;}
 
@@ -289,12 +318,33 @@ hr{border:none;border-top:1px solid var(--rule);margin:0;}
   position:relative;
 }
 .about-accent-img{
-  position:absolute;top:-2.25rem;right:2.5rem;
+  position:absolute;top:-2.75rem;left:-3.5rem;
   width:8rem;aspect-ratio:3/4;
   transform:rotate(-4deg);
   box-shadow:0 14px 32px rgba(0,0,0,.35);
   outline:1px solid var(--bg);
   z-index:2;overflow:hidden;
+}
+.about-accent-img-2{
+  position:absolute;bottom:1.75rem;left:-3.5rem;
+  width:9.5rem;aspect-ratio:4/3;
+  transform:rotate(3.5deg);
+  box-shadow:0 14px 32px rgba(0,0,0,.35);
+  outline:1px solid var(--bg);
+  z-index:3;overflow:hidden;
+}
+.about-accent-img-2 img{width:100%;height:100%;object-fit:cover;display:block;}
+.about-figure{
+  margin-top:2.5rem;position:relative;
+}
+.about-figure-img{
+  aspect-ratio:16/9;overflow:hidden;
+}
+.about-figure-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease;}
+.about-figure:hover .about-figure-img img{transform:scale(1.04);}
+.about-figure figcaption{
+  margin-top:.55rem;
+  font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;color:var(--mid);
 }
 .about-headline{
   font-family:var(--bebas);
@@ -352,21 +402,103 @@ hr{border:none;border-top:1px solid var(--rule);margin:0;}
 }
 
 /* ── FEATURED STRIP ── */
-#featured-strip{padding:1rem 3rem 3rem;max-width:1600px;margin:0 auto;}
+#featured-strip{padding:4rem 3rem 5rem;max-width:1600px;margin:0 auto;}
 .featured-strip-grid{
-  display:grid;grid-template-columns:1fr 1.3fr 1fr;
-  gap:1.5rem;align-items:end;
+  display:grid;
+  grid-template-columns:.8fr 1fr 1.35fr 1fr .8fr;
+  gap:1rem;align-items:end;
 }
-.featured-img{overflow:hidden;}
-.featured-img img{transition:transform .5s ease;}
-.featured-img:hover img{transform:scale(1.04);}
+.featured-img{overflow:hidden;position:relative;}
+.featured-img img{transition:transform .6s ease;}
+.featured-img:hover img{transform:scale(1.05);}
+.featured-cap{
+  display:block;margin-top:.5rem;
+  font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--mid);
+}
+/* the offsets are transforms, not margins: the row stays bottom-aligned
+   in layout and the frames sit off the line like prints on a lightbox */
+.featured-item{display:block;}
 .featured-img-a{aspect-ratio:3/4;}
-.featured-img-b{
-  aspect-ratio:16/10;margin-top:-2.5rem;
+.featured-item-a{transform:translateY(-2.5rem);}
+.featured-img-b{aspect-ratio:4/5;}
+.featured-item-b{transform:translateY(1.5rem);}
+.featured-img-c{
+  aspect-ratio:4/5;
   box-shadow:0 18px 40px rgba(0,0,0,.4);
   position:relative;z-index:2;
 }
-.featured-img-c{aspect-ratio:3/4;align-self:start;margin-top:1.5rem;}
+.featured-item-c{transform:translateY(-3.5rem);}
+.featured-img-d{aspect-ratio:4/5;}
+.featured-item-d{transform:translateY(2rem);}
+.featured-img-e{aspect-ratio:4/3;}
+.featured-item-e{transform:translateY(-1rem);}
+
+/* ── PHOTO BAND (full-bleed contact sheet in motion) ── */
+.photo-band{
+  --band-h:clamp(140px,17vw,240px);
+  position:relative;
+  border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  margin:3.5rem 0;
+}
+.band-head{
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding:.7rem 3rem;
+  border-bottom:1px solid var(--rule);
+}
+.band-label,.band-count{
+  font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--mid);
+}
+.band-viewport{overflow:hidden;}
+.band-track{
+  display:flex;gap:.4rem;width:max-content;
+  animation:band-scroll 75s linear infinite;
+  will-change:transform;
+}
+.photo-band[data-dir="reverse"] .band-track{animation-direction:reverse;}
+.photo-band:hover .band-track,
+.photo-band:focus-within .band-track{animation-play-state:paused;}
+@keyframes band-scroll{from{transform:translate3d(0,0,0);}to{transform:translate3d(-50%,0,0);}}
+.band-frame{
+  flex:0 0 auto;position:relative;overflow:hidden;
+  height:var(--band-h);width:calc(var(--band-h)*1.45);
+}
+.band-frame.is-portrait{width:calc(var(--band-h)*.72);}
+.band-frame img{width:100%;height:100%;object-fit:cover;display:block;}
+
+/* ── INTERSTITIAL (full-bleed quote plate) ── */
+.interstitial{
+  position:relative;overflow:hidden;
+  height:clamp(380px,62vh,640px);
+  border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  display:flex;align-items:flex-end;
+  isolation:isolate;
+}
+.interstitial-img{
+  position:absolute;inset:-12% 0;z-index:-2;
+  will-change:transform;
+}
+.interstitial-img img{width:100%;height:100%;object-fit:cover;display:block;}
+.interstitial::after{
+  content:'';position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(to top,rgba(0,0,0,.85) 0%,rgba(0,0,0,.45) 48%,rgba(0,0,0,.15) 100%);
+}
+.interstitial-inner{
+  position:relative;width:100%;max-width:1600px;margin:0 auto;
+  padding:0 3rem 3rem;
+}
+.interstitial-quote{
+  font-family:var(--serif);font-style:italic;
+  font-size:clamp(1.5rem,3.6vw,3rem);
+  line-height:1.15;color:#fff;
+  max-width:22ch;
+}
+.interstitial-meta{
+  display:block;margin-top:1.25rem;
+  font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;
+  color:rgba(255,255,255,.72);
+}
 
 /* ── SERVICES TABS ── */
 #services{padding:3rem 0;}
@@ -511,6 +643,13 @@ hr{border:none;border-top:1px solid var(--rule);margin:0;}
   color:var(--mid);margin-bottom:.4rem;
 }
 .contact-detail-val{font-size:.95rem;}
+.contact-strip{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:.4rem;margin-top:2.5rem;
+}
+.contact-strip-frame{position:relative;overflow:hidden;aspect-ratio:3/4;}
+.contact-strip-frame img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;}
+.contact-strip-frame:hover img{transform:scale(1.06);}
 .availability-dot{
   display:inline-block;width:7px;height:7px;border-radius:50%;
   background:#000;animation:pulse 2s ease-in-out infinite;
@@ -594,6 +733,15 @@ footer{
 /* ── MAGNETIC BTN ── */
 .magnetic{display:inline-block;transition:transform .3s cubic-bezier(.16,1,.3,1);}
 
+/* ── FRAME EDGE ──
+   dark photographs on a black field lose their own edges; a hairline
+   inside the frame gives every print a boundary without adding depth */
+.gallery-thumb,.band-frame,.hero-sheet-frame,.contact-strip-frame,
+.featured-img,.about-figure-img{
+  outline:1px solid var(--rule);
+  outline-offset:-1px;
+}
+
 /* ── REVEAL ── */
 .reveal{opacity:0;transform:translateY(1.5rem);transition:opacity .7s ease,transform .7s ease;}
 .reveal.visible{opacity:1;transform:none;}
@@ -620,9 +768,11 @@ footer{
   color:var(--mid);margin-bottom:0;display:block;
   border-bottom:1px solid var(--tab-accent,var(--rule));padding-bottom:.4rem;
 }
+/* a composed spread, not a uniform grid: one lead frame, a stacked pair
+   beside it, three across underneath — the rows resolve exactly, no holes */
 .gallery-grid{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:repeat(6,1fr);
   gap:.5rem;
   margin-top:.75rem;
   margin-bottom:0;
@@ -630,10 +780,34 @@ footer{
 .gallery-thumb{
   overflow:hidden;
   position:relative;
-  aspect-ratio:4/3;
 }
-.gallery-thumb img{transition:transform .4s ease;}
+.gallery-thumb img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .5s ease;
+}
+.gallery-thumb.is-feature{grid-column:1/5;grid-row:1/3;}
+.gallery-thumb.is-stack{grid-column:5/7;aspect-ratio:4/3;}
+.gallery-thumb.is-third{grid-column:span 2;aspect-ratio:3/2;}
 .gallery-thumb:hover img{transform:scale(1.05);}
+
+/* frame metadata — reads like a contact-sheet annotation, not a caption card */
+.frame-meta{
+  position:absolute;inset:auto 0 0 0;z-index:2;
+  display:flex;justify-content:space-between;align-items:flex-end;gap:1rem;
+  padding:1.4rem .7rem .6rem;
+  font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;
+  color:#fff;
+  background:linear-gradient(to top,rgba(0,0,0,.78),rgba(0,0,0,0));
+  opacity:0;transform:translateY(.4rem);
+  transition:opacity .35s ease,transform .35s ease;
+  pointer-events:none;
+}
+.gallery-thumb:hover .frame-meta,
+.gallery-thumb:focus-visible .frame-meta{opacity:1;transform:none;}
+.frame-meta-view{white-space:nowrap;}
+@media(hover:none){
+  .frame-meta{opacity:1;transform:none;}
+}
 
 /* ── LIGHTBOX ── */
 #lightbox{
@@ -669,7 +843,7 @@ footer{
 @media(hover:none){
   html{cursor:auto;}
   #cursor,#cursor-ring{display:none;}
-  a,button,.nav-cta,.form-submit,.tab-btn{cursor:pointer;}
+  a,button,.nav-cta,.form-submit,.tab-btn,.js-lb{cursor:pointer;}
 }
 
 /* ── RESPONSIVE ── */
@@ -702,9 +876,26 @@ footer{
   .tab-includes-col{padding:1.5rem 1.5rem;}
   .tab-gallery{padding:0 1.5rem 1.5rem;}
 
-  .about-accent-img{display:none;}
-  .featured-img-b,.featured-img-c{margin-top:0;}
-  .featured-strip-grid{grid-template-columns:1fr;}
+  .about-accent-img,.about-accent-img-2{display:none;}
+  #featured-strip{padding:2rem 1.5rem 2.5rem;}
+  .featured-strip-grid{grid-template-columns:1fr 1fr;gap:.75rem;}
+  .featured-item{transform:none;}
+
+  /* hero sheet: three frames is enough evidence on a phone */
+  .hero-sheet{grid-template-columns:repeat(3,1fr);margin-top:1.5rem;}
+  .hero-sheet-frame:nth-child(n+4){display:none;}
+
+  /* galleries collapse to a two-up sheet with a full-width lead and closer */
+  .gallery-grid{grid-template-columns:repeat(2,1fr);}
+  .gallery-thumb.is-feature{grid-column:1/3;grid-row:auto;aspect-ratio:4/3;}
+  .gallery-thumb.is-stack,.gallery-thumb.is-third{grid-column:span 1;aspect-ratio:4/3;}
+  .gallery-thumb:last-child{grid-column:span 2;aspect-ratio:2/1;}
+
+  /* photo bands + interstitial */
+  .band-head{padding:.7rem 1.5rem;}
+  .band-count{display:none;}
+  .interstitial{height:clamp(320px,52vh,460px);}
+  .interstitial-inner{padding:0 1.5rem 2rem;}
 
   /* process */
   .process-trigger{padding-left:1.5rem;padding-right:1.5rem;gap:1.5rem;}
@@ -724,10 +915,12 @@ footer{
 
 /* ── SMALL PHONES (≤480px) ── */
 @media(max-width:480px){
-  .gallery-grid{grid-template-columns:repeat(2,1fr);}
+  .gallery-grid{gap:.3rem;}
+  .gallery-thumb.is-feature{aspect-ratio:3/2;}
   .hero-title-main{font-size:clamp(5rem,18vw,22rem);}
   .tab-btn{padding:.8rem 1rem;font-size:.62rem;}
   .hero-img{display:none;}
+  .contact-strip{gap:.3rem;}
 }
 
 /* ── REDUCED MOTION ── */
@@ -735,9 +928,16 @@ footer{
   .reveal{transition:none;opacity:1;transform:none;}
   .hero-title-top-word,.hero-title-by,.hero-title-main,.hero-title-inner{animation:none!important;transform:none!important;}
   .process-body,.gallery-grid{transition:none;}
-  .gallery-thumb:hover img,.featured-img:hover img{transform:none;}
+  .gallery-thumb:hover img,.featured-img:hover img,
+  .hero-sheet-frame:hover img,.contact-strip-frame:hover img,
+  .about-figure:hover .about-figure-img img{transform:none;}
   #typewriter-text::after{animation:none;}
   .availability-dot{animation:none;}
+  /* bands stop moving and become a hand-scrolled contact sheet instead */
+  .band-track{animation:none;}
+  .photo-band{overflow-x:auto;}
+  .interstitial-img{transform:none!important;}
+  .frame-meta{transition:none;opacity:1;transform:none;}
 }
 
 </style>
@@ -793,6 +993,35 @@ footer{
       ↓ Scroll to explore
     </div>
   </div>
+  <div class="hero-sheet" data-lb-group="hero">
+    <figure class="hero-sheet-frame js-lb"><span class="hero-sheet-index">01</span><picture><source srcset="event%20examples/web-optimized/DSCF9757.webp" type="image/webp"><img src="event%20examples/web-optimized/DSCF9757.jpg" alt="Event photograph — Montréal" loading="lazy" width="1280" height="854"></picture></figure>
+    <figure class="hero-sheet-frame js-lb"><span class="hero-sheet-index">02</span><picture><source srcset="people%20examples/web-optimized/DSCF2963.webp" type="image/webp"><img src="people%20examples/web-optimized/DSCF2963.jpg" alt="Portrait photograph" loading="lazy" width="720" height="1280"></picture></figure>
+    <figure class="hero-sheet-frame js-lb"><span class="hero-sheet-index">03</span><picture><source srcset="sport%20examples/web-optimized/DSCF6163.webp" type="image/webp"><img src="sport%20examples/web-optimized/DSCF6163.jpg" alt="Sport photograph" loading="lazy" width="720" height="1280"></picture></figure>
+    <figure class="hero-sheet-frame js-lb"><span class="hero-sheet-index">04</span><picture><source srcset="event%20examples/web-optimized/DSCF0433%20copy.webp" type="image/webp"><img src="event%20examples/web-optimized/DSCF0433%20copy.jpg" alt="Event photograph" loading="lazy" width="1280" height="853"></picture></figure>
+    <figure class="hero-sheet-frame js-lb"><span class="hero-sheet-index">05</span><picture><source srcset="people%20examples/web-optimized/DSCF7999.webp" type="image/webp"><img src="people%20examples/web-optimized/DSCF7999.jpg" alt="Portrait photograph" loading="lazy" width="1280" height="720"></picture></figure>
+    <figure class="hero-sheet-frame js-lb"><span class="hero-sheet-index">06</span><picture><source srcset="sport%20examples/web-optimized/IMG_2042.webp" type="image/webp"><img src="sport%20examples/web-optimized/IMG_2042.jpg" alt="Sport photograph" loading="lazy" width="1280" height="854"></picture></figure>
+  </div>
+</section>
+
+<!-- PHOTO BAND — A -->
+<section class="photo-band" data-dir="forward" aria-label="Selected work">
+  <div class="band-head">
+    <span class="band-label" data-i18n="band.a">Contact sheet — Sport / Events / People</span>
+    <span class="band-count">09 / 18</span>
+  </div>
+  <div class="band-viewport">
+  <div class="band-track" data-lb-group="band-a">
+    <figure class="band-frame js-lb"><picture><source srcset="sport%20examples/web-optimized/IMG_2018.webp" type="image/webp"><img src="sport%20examples/web-optimized/IMG_2018.jpg" alt="Sport photograph" loading="lazy" width="1135" height="1280"></picture></figure>
+    <figure class="band-frame js-lb"><picture><source srcset="event%20examples/web-optimized/DSCF9492.webp" type="image/webp"><img src="event%20examples/web-optimized/DSCF9492.jpg" alt="Event photograph" loading="lazy" width="1280" height="854"></picture></figure>
+    <figure class="band-frame is-portrait js-lb"><picture><source srcset="people%20examples/web-optimized/DSCF2055.webp" type="image/webp"><img src="people%20examples/web-optimized/DSCF2055.jpg" alt="Portrait photograph" loading="lazy" width="720" height="1280"></picture></figure>
+    <figure class="band-frame js-lb"><picture><source srcset="sport%20examples/web-optimized/DSCF4981.webp" type="image/webp"><img src="sport%20examples/web-optimized/DSCF4981.jpg" alt="Sport photograph" loading="lazy" width="1280" height="1021"></picture></figure>
+    <figure class="band-frame js-lb"><picture><source srcset="event%20examples/web-optimized/DSCF0115%20copy.webp" type="image/webp"><img src="event%20examples/web-optimized/DSCF0115%20copy.jpg" alt="Event photograph" loading="lazy" width="1280" height="854"></picture></figure>
+    <figure class="band-frame is-portrait js-lb"><picture><source srcset="sport%20examples/web-optimized/DSCF5056.webp" type="image/webp"><img src="sport%20examples/web-optimized/DSCF5056.jpg" alt="Sport photograph" loading="lazy" width="720" height="1280"></picture></figure>
+    <figure class="band-frame js-lb"><picture><source srcset="people%20examples/web-optimized/DSCF8578%20copy.webp" type="image/webp"><img src="people%20examples/web-optimized/DSCF8578%20copy.jpg" alt="Portrait photograph" loading="lazy" width="1280" height="854"></picture></figure>
+    <figure class="band-frame js-lb"><picture><source srcset="event%20examples/web-optimized/DSCF9794%20copy.webp" type="image/webp"><img src="event%20examples/web-optimized/DSCF9794%20copy.jpg" alt="Event photograph" loading="lazy" width="1280" height="854"></picture></figure>
+    <figure class="band-frame is-portrait js-lb"><picture><source srcset="people%20examples/web-optimized/DSCF2981.webp" type="image/webp"><img src="people%20examples/web-optimized/DSCF2981.jpg" alt="Portrait photograph" loading="lazy" width="720" height="1280"></picture></figure>
+  </div>
+  </div>
 </section>
 
 <!-- ABOUT -->
@@ -827,16 +1056,38 @@ footer{
       <div class="about-manifesto" data-i18n="about.manifesto">
         "Photography is an art of observation. It has little to do with the things you see and everything to do with the way you see them." — Elliott Erwitt
       </div>
+      <figure class="about-figure" data-lb-group="about">
+        <div class="about-figure-img js-lb"><picture><source srcset="sport%20examples/web-optimized/DSCF4981.webp" type="image/webp"><img src="sport%20examples/web-optimized/DSCF4981.jpg" alt="Sport photograph — on assignment" loading="lazy" width="1280" height="1021"></picture></div>
+        <div class="about-accent-img-2" aria-hidden="true"><picture><source srcset="event%20examples/web-optimized/DSCF9492.webp" type="image/webp"><img src="event%20examples/web-optimized/DSCF9492.jpg" alt="" loading="lazy" width="1280" height="854"></picture></div>
+        <figcaption data-i18n="about.fig">Fig. 01 — On assignment, Montréal</figcaption>
+      </figure>
     </div>
   </div>
 </section>
 
 <!-- FEATURED STRIP -->
 <section id="featured-strip" class="reveal">
-  <div class="featured-strip-grid">
-    <div class="featured-img featured-img-a"><picture><source srcset="sport%20examples/web-optimized/DSCF4981.webp" type="image/webp"><img src="sport%20examples/web-optimized/DSCF4981.jpg" alt="" loading="lazy" width="1280" height="1021"></picture></div>
-    <div class="featured-img featured-img-b"><picture><source srcset="event%20examples/web-optimized/DSCF9492.webp" type="image/webp"><img src="event%20examples/web-optimized/DSCF9492.jpg" alt="" loading="lazy" width="1280" height="854"></picture></div>
-    <div class="featured-img featured-img-c"><picture><source srcset="people%20examples/web-optimized/DSCF2981.webp" type="image/webp"><img src="people%20examples/web-optimized/DSCF2981.jpg" alt="" loading="lazy" width="720" height="1280"></picture></div>
+  <div class="featured-strip-grid" data-lb-group="featured">
+    <figure class="featured-item featured-item-a">
+      <div class="featured-img featured-img-a js-lb"><picture><source srcset="sport%20examples/web-optimized/DSCF4764.webp" type="image/webp"><img src="sport%20examples/web-optimized/DSCF4764.jpg" alt="Sport photograph" loading="lazy" width="720" height="1280"></picture></div>
+      <figcaption class="featured-cap">SPT · 001</figcaption>
+    </figure>
+    <figure class="featured-item featured-item-b">
+      <div class="featured-img featured-img-b js-lb"><picture><source srcset="event%20examples/web-optimized/DSCF0605%20copy.webp" type="image/webp"><img src="event%20examples/web-optimized/DSCF0605%20copy.jpg" alt="Event photograph" loading="lazy" width="853" height="1280"></picture></div>
+      <figcaption class="featured-cap">EVT · 002</figcaption>
+    </figure>
+    <figure class="featured-item featured-item-c">
+      <div class="featured-img featured-img-c js-lb"><picture><source srcset="sport%20examples/web-optimized/DSCF6163.webp" type="image/webp"><img src="sport%20examples/web-optimized/DSCF6163.jpg" alt="Sport photograph" loading="lazy" width="720" height="1280"></picture></div>
+      <figcaption class="featured-cap">SPT · 003</figcaption>
+    </figure>
+    <figure class="featured-item featured-item-d">
+      <div class="featured-img featured-img-d js-lb"><picture><source srcset="people%20examples/web-optimized/DSCF2981.webp" type="image/webp"><img src="people%20examples/web-optimized/DSCF2981.jpg" alt="Portrait photograph" loading="lazy" width="720" height="1280"></picture></div>
+      <figcaption class="featured-cap">PPL · 004</figcaption>
+    </figure>
+    <figure class="featured-item featured-item-e">
+      <div class="featured-img featured-img-e js-lb"><picture><source srcset="sport%20examples/web-optimized/IMG_2042.webp" type="image/webp"><img src="sport%20examples/web-optimized/IMG_2042.jpg" alt="Sport photograph" loading="lazy" width="1280" height="854"></picture></div>
+      <figcaption class="featured-cap">SPT · 005</figcaption>
+    </figure>
   </div>
 </section>
 
@@ -874,13 +1125,13 @@ footer{
       </div>
     </div>
     <div class="tab-gallery">
-      <div class="gallery-grid">
-        <div class="gallery-thumb"><picture><source srcset="people%20examples/web-optimized/DSCF2055.webp" type="image/webp"><img src="people%20examples/web-optimized/DSCF2055.jpg" alt="People example" loading="lazy" width="720" height="1280"></picture></div>
-        <div class="gallery-thumb"><picture><source srcset="people%20examples/web-optimized/DSCF2963.webp" type="image/webp"><img src="people%20examples/web-optimized/DSCF2963.jpg" alt="People example" loading="lazy" width="720" height="1280"></picture></div>
-        <div class="gallery-thumb"><picture><source srcset="people%20examples/web-optimized/DSCF2981.webp" type="image/webp"><img src="people%20examples/web-optimized/DSCF2981.jpg" alt="People example" loading="lazy" width="720" height="1280"></picture></div>
-        <div class="gallery-thumb"><picture><source srcset="people%20examples/web-optimized/DSCF7999.webp" type="image/webp"><img src="people%20examples/web-optimized/DSCF7999.jpg" alt="People example" loading="lazy" width="1280" height="720"></picture></div>
-        <div class="gallery-thumb"><picture><source srcset="people%20examples/web-optimized/DSCF8359.webp" type="image/webp"><img src="people%20examples/web-optimized/DSCF8359.jpg" alt="People example" loading="lazy" width="1280" height="720"></picture></div>
-        <div class="gallery-thumb"><picture><source srcset="people%20examples/web-optimized/DSCF8578%20copy.webp" type="image/webp"><img src="people%20examples/web-optimized/DSCF8578%20copy.jpg" alt="People example" loading="lazy" width="1280" height="854"></picture></div>
+      <div class="gallery-grid" data-lb-group="people">
+        <figure class="gallery-thumb is-feature js-lb"><picture><source srcset="people%20examples/web-optimized/DSCF8578%20copy.webp" type="image/webp"><img src="people%20examples/web-optimized/DSCF8578%20copy.jpg" alt="People example" loading="lazy" width="1280" height="854"></picture><figcaption class="frame-meta"><span>PPL · 01</span><span class="frame-meta-view" data-i18n="gallery.view">View +</span></figcaption></figure>
+        <figure class="gallery-thumb is-stack js-lb"><picture><source srcset="people%20examples/web-optimized/DSCF2055.webp" type="image/webp"><img src="people%20examples/web-optimized/DSCF2055.jpg" alt="People example" loading="lazy" width="720" height="1280"></picture><figcaption class="frame-meta"><span>PPL · 02</span><span class="frame-meta-view" data-i18n="gallery.view">View +</span></figcaption></figure>
+        <figure class="gallery-thumb is-stack js-lb"><picture><source srcset="people%20examples/web-optimized/DSCF7999.webp" type="image/webp"><img src="people%20examples/web-optimized/DSCF7999.jpg" alt="People example" loading="lazy" width="1280" height="720"></picture><figcaption class="frame-meta"><span>PPL · 03</span><span class="frame-meta-view" data-i18n="gallery.view">View +</span></figcaption></figure>
+        <figure class="gallery-thumb is-third js-lb"><picture><source srcset="people%20examples/web-optimized/DSCF2963.webp" type="image/webp"><img src="people%20examples/web-optimized/DSCF2963.jpg" alt="People example" loading="lazy" width="720" height="1280"></picture><figcaption class="frame-meta"><span>PPL · 04</span><span class="frame-meta-view" data-i18n="gallery.view">View +</span></figcaption></figure>
+        <figure class="gallery-thumb is-third js-lb"><picture><source srcset="people%20examples/web-optimized/DSCF8359.webp" type="image/webp"><img src="people%20examples/web-optimized/DSCF8359.jpg" alt="People example" loading="lazy" width="1280" height="720"></picture><figcaption class="frame-meta"><span>PPL · 05</span><span class="frame-meta-view" data-i18n="gallery.view">View +</span></figcaption></figure>
+        <figure class="gallery-thumb is-third js-lb"><picture><source srcset="people%20examples/web-optimized/DSCF2981.webp" type="image/webp"><img src="people%20examples/web-optimized/DSCF2981.jpg" alt="People example" loading="lazy" width="720" height="1280"></picture><figcaption class="frame-meta"><span>PPL · 06</span><span class="frame-meta-view" data-i18n="gallery.view">View +</span></figcaption></figure>
       </div>
     </div>
   </div>
@@ -904,13 +1155,13 @@ footer{
       </div>
     </div>
     <div class="tab-gallery">
-      <div class="gallery-grid">
-        <div class="gallery-thumb"><picture><source srcset="event%20examples/web-optimized/DSCF0115%20copy.webp" type="image/webp"><img src="event%20examples/web-optimized/DSCF0115%20copy.jpg" alt="Event example" loading="lazy" width="1280" height="854"></picture></div>
-        <div class="gallery-thumb"><picture><source srcset="event%20examples/web-optimized/DSCF0433%20copy.webp" type="image/webp"><img src="event%20examples/web-optimized/DSCF0433%20copy.jpg" alt="Event example" loading="lazy" width="1280" height="853"></picture></div>
-        <div class="gallery-thumb"><picture><source srcset="event%20examples/web-optimized/DSCF9492.webp" type="image/webp"><img src="event%20examples/web-optimized/DSCF9492.jpg" alt="Event example" loading="lazy" width="1280" height="854"></picture></div>
-        <div class="gallery-thumb"><picture><source srcset="event%20examples/web-optimized/DSCF9757.webp" type="image/webp"><img src="event%20examples/web-optimized/DSCF9757.jpg" alt="Event example" loading="lazy" width="1280" height="854"></picture></div>
-        <div class="gallery-thumb"><picture><source srcset="event%20examples/web-optimized/DSCF9794%20copy.webp" type="image/webp"><img src="event%20examples/web-optimized/DSCF9794%20copy.jpg" alt="Event example" loading="lazy" width="1280" height="854"></picture></div>
-        <div class="gallery-thumb"><picture><source srcset="event%20examples/web-optimized/DSCF0605%20copy.webp" type="image/webp"><img src="event%20examples/web-optimized/DSCF0605%20copy.jpg" alt="Event example" loading="lazy" width="853" height="1280"></picture></div>
+      <div class="gallery-grid" data-lb-group="events">
+        <figure class="gallery-thumb is-feature js-lb"><picture><source srcset="event%20examples/web-optimized/DSCF9492.webp" type="image/webp"><img src="event%20examples/web-optimized/DSCF9492.jpg" alt="Event example" loading="lazy" width="1280" height="854"></picture><figcaption class="frame-meta"><span>EVT · 01</span><span class="frame-meta-view" data-i18n="gallery.view">View +</span></figcaption></figure>
+        <figure class="gallery-thumb is-stack js-lb"><picture><source srcset="event%20examples/web-optimized/DSCF0605%20copy.webp" type="image/webp"><img src="event%20examples/web-optimized/DSCF0605%20copy.jpg" alt="Event example" loading="lazy" width="853" height="1280"></picture><figcaption class="frame-meta"><span>EVT · 02</span><span class="frame-meta-view" data-i18n="gallery.view">View +</span></figcaption></figure>
+        <figure class="gallery-thumb is-stack js-lb"><picture><source srcset="event%20examples/web-optimized/DSCF0115%20copy.webp" type="image/webp"><img src="event%20examples/web-optimized/DSCF0115%20copy.jpg" alt="Event example" loading="lazy" width="1280" height="854"></picture><figcaption class="frame-meta"><span>EVT · 03</span><span class="frame-meta-view" data-i18n="gallery.view">View +</span></figcaption></figure>
+        <figure class="gallery-thumb is-third js-lb"><picture><source srcset="event%20examples/web-optimized/DSCF9757.webp" type="image/webp"><img src="event%20examples/web-optimized/DSCF9757.jpg" alt="Event example" loading="lazy" width="1280" height="854"></picture><figcaption class="frame-meta"><span>EVT · 04</span><span class="frame-meta-view" data-i18n="gallery.view">View +</span></figcaption></figure>
+        <figure class="gallery-thumb is-third js-lb"><picture><source srcset="event%20examples/web-optimized/DSCF0433%20copy.webp" type="image/webp"><img src="event%20examples/web-optimized/DSCF0433%20copy.jpg" alt="Event example" loading="lazy" width="1280" height="853"></picture><figcaption class="frame-meta"><span>EVT · 05</span><span class="frame-meta-view" data-i18n="gallery.view">View +</span></figcaption></figure>
+        <figure class="gallery-thumb is-third js-lb"><picture><source srcset="event%20examples/web-optimized/DSCF9794%20copy.webp" type="image/webp"><img src="event%20examples/web-optimized/DSCF9794%20copy.jpg" alt="Event example" loading="lazy" width="1280" height="854"></picture><figcaption class="frame-meta"><span>EVT · 06</span><span class="frame-meta-view" data-i18n="gallery.view">View +</span></figcaption></figure>
       </div>
     </div>
   </div>
@@ -934,13 +1185,13 @@ footer{
       </div>
     </div>
     <div class="tab-gallery">
-      <div class="gallery-grid">
-        <div class="gallery-thumb"><picture><source srcset="sport%20examples/web-optimized/DSCF4764.webp" type="image/webp"><img src="sport%20examples/web-optimized/DSCF4764.jpg" alt="Sport example" loading="lazy" width="720" height="1280"></picture></div>
-        <div class="gallery-thumb"><picture><source srcset="sport%20examples/web-optimized/DSCF4981.webp" type="image/webp"><img src="sport%20examples/web-optimized/DSCF4981.jpg" alt="Sport example" loading="lazy" width="1280" height="1021"></picture></div>
-        <div class="gallery-thumb"><picture><source srcset="sport%20examples/web-optimized/DSCF5056.webp" type="image/webp"><img src="sport%20examples/web-optimized/DSCF5056.jpg" alt="Sport example" loading="lazy" width="720" height="1280"></picture></div>
-        <div class="gallery-thumb"><picture><source srcset="sport%20examples/web-optimized/DSCF6163.webp" type="image/webp"><img src="sport%20examples/web-optimized/DSCF6163.jpg" alt="Sport example" loading="lazy" width="720" height="1280"></picture></div>
-        <div class="gallery-thumb"><picture><source srcset="sport%20examples/web-optimized/IMG_2018.webp" type="image/webp"><img src="sport%20examples/web-optimized/IMG_2018.jpg" alt="Sport example" loading="lazy" width="1135" height="1280"></picture></div>
-        <div class="gallery-thumb"><picture><source srcset="sport%20examples/web-optimized/IMG_2042.webp" type="image/webp"><img src="sport%20examples/web-optimized/IMG_2042.jpg" alt="Sport example" loading="lazy" width="1280" height="854"></picture></div>
+      <div class="gallery-grid" data-lb-group="sport">
+        <figure class="gallery-thumb is-feature js-lb"><picture><source srcset="sport%20examples/web-optimized/DSCF4981.webp" type="image/webp"><img src="sport%20examples/web-optimized/DSCF4981.jpg" alt="Sport example" loading="lazy" width="1280" height="1021"></picture><figcaption class="frame-meta"><span>SPT · 01</span><span class="frame-meta-view" data-i18n="gallery.view">View +</span></figcaption></figure>
+        <figure class="gallery-thumb is-stack js-lb"><picture><source srcset="sport%20examples/web-optimized/DSCF4764.webp" type="image/webp"><img src="sport%20examples/web-optimized/DSCF4764.jpg" alt="Sport example" loading="lazy" width="720" height="1280"></picture><figcaption class="frame-meta"><span>SPT · 02</span><span class="frame-meta-view" data-i18n="gallery.view">View +</span></figcaption></figure>
+        <figure class="gallery-thumb is-stack js-lb"><picture><source srcset="sport%20examples/web-optimized/IMG_2042.webp" type="image/webp"><img src="sport%20examples/web-optimized/IMG_2042.jpg" alt="Sport example" loading="lazy" width="1280" height="854"></picture><figcaption class="frame-meta"><span>SPT · 03</span><span class="frame-meta-view" data-i18n="gallery.view">View +</span></figcaption></figure>
+        <figure class="gallery-thumb is-third js-lb"><picture><source srcset="sport%20examples/web-optimized/DSCF5056.webp" type="image/webp"><img src="sport%20examples/web-optimized/DSCF5056.jpg" alt="Sport example" loading="lazy" width="720" height="1280"></picture><figcaption class="frame-meta"><span>SPT · 04</span><span class="frame-meta-view" data-i18n="gallery.view">View +</span></figcaption></figure>
+        <figure class="gallery-thumb is-third js-lb"><picture><source srcset="sport%20examples/web-optimized/IMG_2018.webp" type="image/webp"><img src="sport%20examples/web-optimized/IMG_2018.jpg" alt="Sport example" loading="lazy" width="1135" height="1280"></picture><figcaption class="frame-meta"><span>SPT · 05</span><span class="frame-meta-view" data-i18n="gallery.view">View +</span></figcaption></figure>
+        <figure class="gallery-thumb is-third js-lb"><picture><source srcset="sport%20examples/web-optimized/DSCF6163.webp" type="image/webp"><img src="sport%20examples/web-optimized/DSCF6163.jpg" alt="Sport example" loading="lazy" width="720" height="1280"></picture><figcaption class="frame-meta"><span>SPT · 06</span><span class="frame-meta-view" data-i18n="gallery.view">View +</span></figcaption></figure>
       </div>
     </div>
   </div>
@@ -962,6 +1213,28 @@ footer{
         <div class="include-item" data-i18n="services.commercial.i5">Full commercial licensing</div>
       </div>
     </div>
+    <div class="tab-gallery">
+      <div class="gallery-header">
+        <span class="gallery-label" data-i18n="services.commercial.gallery">Selected frames — full commercial portfolio on request</span>
+      </div>
+      <div class="gallery-grid" data-lb-group="commercial">
+        <figure class="gallery-thumb is-feature js-lb"><picture><source srcset="people%20examples/web-optimized/DSCF7999.webp" type="image/webp"><img src="people%20examples/web-optimized/DSCF7999.jpg" alt="Selected photograph" loading="lazy" width="1280" height="720"></picture><figcaption class="frame-meta"><span>SEL · 01</span><span class="frame-meta-view" data-i18n="gallery.view">View +</span></figcaption></figure>
+        <figure class="gallery-thumb is-stack js-lb"><picture><source srcset="people%20examples/web-optimized/DSCF8359.webp" type="image/webp"><img src="people%20examples/web-optimized/DSCF8359.jpg" alt="Selected photograph" loading="lazy" width="1280" height="720"></picture><figcaption class="frame-meta"><span>SEL · 02</span><span class="frame-meta-view" data-i18n="gallery.view">View +</span></figcaption></figure>
+        <figure class="gallery-thumb is-stack js-lb"><picture><source srcset="event%20examples/web-optimized/DSCF0433%20copy.webp" type="image/webp"><img src="event%20examples/web-optimized/DSCF0433%20copy.jpg" alt="Selected photograph" loading="lazy" width="1280" height="853"></picture><figcaption class="frame-meta"><span>SEL · 03</span><span class="frame-meta-view" data-i18n="gallery.view">View +</span></figcaption></figure>
+        <figure class="gallery-thumb is-third js-lb"><picture><source srcset="sport%20examples/web-optimized/IMG_2018.webp" type="image/webp"><img src="sport%20examples/web-optimized/IMG_2018.jpg" alt="Selected photograph" loading="lazy" width="1135" height="1280"></picture><figcaption class="frame-meta"><span>SEL · 04</span><span class="frame-meta-view" data-i18n="gallery.view">View +</span></figcaption></figure>
+        <figure class="gallery-thumb is-third js-lb"><picture><source srcset="event%20examples/web-optimized/DSCF9757.webp" type="image/webp"><img src="event%20examples/web-optimized/DSCF9757.jpg" alt="Selected photograph" loading="lazy" width="1280" height="854"></picture><figcaption class="frame-meta"><span>SEL · 05</span><span class="frame-meta-view" data-i18n="gallery.view">View +</span></figcaption></figure>
+        <figure class="gallery-thumb is-third js-lb"><picture><source srcset="people%20examples/web-optimized/DSCF2055.webp" type="image/webp"><img src="people%20examples/web-optimized/DSCF2055.jpg" alt="Selected photograph" loading="lazy" width="720" height="1280"></picture><figcaption class="frame-meta"><span>SEL · 06</span><span class="frame-meta-view" data-i18n="gallery.view">View +</span></figcaption></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTERSTITIAL -->
+<section class="interstitial" id="interstitial">
+  <div class="interstitial-img" aria-hidden="true"><picture><source srcset="sport%20examples/web-optimized/DSCF5056.webp" type="image/webp"><img src="sport%20examples/web-optimized/DSCF5056.jpg" alt="" loading="lazy" width="720" height="1280"></picture></div>
+  <div class="interstitial-inner">
+    <blockquote class="interstitial-quote" data-i18n="interstitial.quote">Light does the work. I just decide where to stand.</blockquote>
+    <span class="interstitial-meta" data-i18n="interstitial.meta">Montréal — available worldwide</span>
   </div>
 </section>
 
@@ -1016,6 +1289,27 @@ footer{
 </section>
 
 
+<!-- PHOTO BAND — B -->
+<section class="photo-band" data-dir="reverse" aria-label="More selected work">
+  <div class="band-head">
+    <span class="band-label" data-i18n="band.b">Contact sheet — 2023 / 2026</span>
+    <span class="band-count">18 / 18</span>
+  </div>
+  <div class="band-viewport">
+  <div class="band-track" data-lb-group="band-b">
+    <figure class="band-frame is-portrait js-lb"><picture><source srcset="people%20examples/web-optimized/DSCF2963.webp" type="image/webp"><img src="people%20examples/web-optimized/DSCF2963.jpg" alt="Portrait photograph" loading="lazy" width="720" height="1280"></picture></figure>
+    <figure class="band-frame js-lb"><picture><source srcset="event%20examples/web-optimized/DSCF9757.webp" type="image/webp"><img src="event%20examples/web-optimized/DSCF9757.jpg" alt="Event photograph" loading="lazy" width="1280" height="854"></picture></figure>
+    <figure class="band-frame js-lb"><picture><source srcset="sport%20examples/web-optimized/IMG_2042.webp" type="image/webp"><img src="sport%20examples/web-optimized/IMG_2042.jpg" alt="Sport photograph" loading="lazy" width="1280" height="854"></picture></figure>
+    <figure class="band-frame js-lb"><picture><source srcset="people%20examples/web-optimized/DSCF8359.webp" type="image/webp"><img src="people%20examples/web-optimized/DSCF8359.jpg" alt="Portrait photograph" loading="lazy" width="1280" height="720"></picture></figure>
+    <figure class="band-frame is-portrait js-lb"><picture><source srcset="event%20examples/web-optimized/DSCF0605%20copy.webp" type="image/webp"><img src="event%20examples/web-optimized/DSCF0605%20copy.jpg" alt="Event photograph" loading="lazy" width="853" height="1280"></picture></figure>
+    <figure class="band-frame is-portrait js-lb"><picture><source srcset="sport%20examples/web-optimized/DSCF4764.webp" type="image/webp"><img src="sport%20examples/web-optimized/DSCF4764.jpg" alt="Sport photograph" loading="lazy" width="720" height="1280"></picture></figure>
+    <figure class="band-frame js-lb"><picture><source srcset="event%20examples/web-optimized/DSCF0433%20copy.webp" type="image/webp"><img src="event%20examples/web-optimized/DSCF0433%20copy.jpg" alt="Event photograph" loading="lazy" width="1280" height="853"></picture></figure>
+    <figure class="band-frame js-lb"><picture><source srcset="people%20examples/web-optimized/DSCF7999.webp" type="image/webp"><img src="people%20examples/web-optimized/DSCF7999.jpg" alt="Portrait photograph" loading="lazy" width="1280" height="720"></picture></figure>
+    <figure class="band-frame is-portrait js-lb"><picture><source srcset="sport%20examples/web-optimized/DSCF6163.webp" type="image/webp"><img src="sport%20examples/web-optimized/DSCF6163.jpg" alt="Sport photograph" loading="lazy" width="720" height="1280"></picture></figure>
+  </div>
+  </div>
+</section>
+
 <!-- CONTACT -->
 <section id="contact">
   <div class="section-header">
@@ -1039,6 +1333,11 @@ footer{
       <div class="contact-detail" style="border:none;margin-bottom:0;padding-bottom:0;">
         <div class="contact-detail-label" data-i18n="contact.response.label">Response Time</div>
         <div class="contact-detail-val" data-i18n="contact.response.val">Within 24 hours</div>
+      </div>
+      <div class="contact-strip" data-lb-group="contact">
+        <div class="contact-strip-frame js-lb"><picture><source srcset="people%20examples/web-optimized/DSCF2055.webp" type="image/webp"><img src="people%20examples/web-optimized/DSCF2055.jpg" alt="Portrait photograph" loading="lazy" width="720" height="1280"></picture></div>
+        <div class="contact-strip-frame js-lb"><picture><source srcset="sport%20examples/web-optimized/DSCF5056.webp" type="image/webp"><img src="sport%20examples/web-optimized/DSCF5056.jpg" alt="Sport photograph" loading="lazy" width="720" height="1280"></picture></div>
+        <div class="contact-strip-frame js-lb"><picture><source srcset="event%20examples/web-optimized/DSCF0115%20copy.webp" type="image/webp"><img src="event%20examples/web-optimized/DSCF0115%20copy.jpg" alt="Event photograph" loading="lazy" width="1280" height="854"></picture></div>
       </div>
     </div>
     <div class="contact-right reveal">
@@ -1118,7 +1417,7 @@ document.addEventListener('mousemove',e=>{
   ring.style.left=rx+'px';ring.style.top=ry+'px';
   requestAnimationFrame(animRing);
 })();
-document.querySelectorAll('a,button,[role="button"],.process-trigger,.tab-btn').forEach(el=>{
+document.querySelectorAll('a,button,[role="button"],.process-trigger,.tab-btn,.js-lb').forEach(el=>{
   el.addEventListener('mouseenter',()=>document.body.classList.add('cursor-hover'));
   el.addEventListener('mouseleave',()=>document.body.classList.remove('cursor-hover'));
 });
@@ -1297,7 +1596,11 @@ const translations = {
     'about.p2':'I work on my own, which keeps things simple. No junior photographers, no account managers, you deal with me directly from the first email to the final gallery.',
     'about.p3':'If you need good photos taken reliably and professionally, get in touch.',
     'about.stat1':'Years Active','about.stat2':'Happy Clients',
+    'about.fig':'Fig. 01 — On assignment, Montréal',
     'about.manifesto':'"Photography is an art of observation. It has little to do with the things you see and everything to do with the way you see them." — Elliott Erwitt',
+    'band.a':'Contact sheet — Sport / Events / People','band.b':'Contact sheet — 2023 / 2026',
+    'interstitial.quote':'Light does the work. I just decide where to stand.',
+    'interstitial.meta':'Montréal — available worldwide',
     'services.label':'Services','services.pricing.note':'Pricing is per job and varies from shoot to shoot. Get in touch for a quote tailored to your project.',
     'services.tab.portraits':'People','services.tab.events':'Events','services.tab.sport':'Sport','services.tab.commercial':'Commercial',
     'services.enquire':'Enquire Now →','services.included':'What\'s included',
@@ -1313,6 +1616,7 @@ const translations = {
     'services.commercial.title':'COMMERCIAL',
     'services.commercial.desc':'Product shots, brand campaigns, and corporate portraits. I can handle the full shoot — planning, on-set direction, and post-production — or work within your existing team. Licensing terms are agreed upfront, no surprises later.',
     'services.commercial.i1':'Creative brief &amp; mood board review','services.commercial.i2':'Multi-day rates available','services.commercial.i4':'Post-production &amp; retouching','services.commercial.i5':'Full commercial licensing',
+    'services.commercial.gallery':'Selected frames — full commercial portfolio on request',
     'process.label':'How It Works',
     'process.s1.title':'Initial Enquiry','process.s1.body':'Fill in the contact form or email me directly. Tell me roughly what you need — even a vague brief is fine to start. I\'ll get back to you within 24 hours. I\'m not taking on huge numbers of projects at once, so if your dates work, we can usually move quickly.',
     'process.s2.title':'Consultation','process.s2.body':'A quick call to talk through what you need, where, and when. We\'ll cover the logistics, the look you\'re after, and the budget. No obligation — if it\'s not the right fit for either of us, that\'s fine too.',
@@ -1327,7 +1631,7 @@ const translations = {
     'contact.form.select':'— Select a service','contact.form.other':'Other',
     'contact.form.message':'Your Message','contact.form.submit':'Send Enquiry',
     'contact.form.note':'All enquiries answered personally.',
-    'gallery.note':'More examples available on request.',
+    'gallery.note':'More examples available on request.','gallery.view':'View +',
     'footer.copy':'© 2026 Mann Photography. All rights reserved. Montréal.',
   },
   fr: {
@@ -1342,6 +1646,10 @@ const translations = {
     'about.p2':'Je travaille seul, ce qui simplifie les choses. Pas de photographes juniors, pas de personnes intermédiaires, vous communiquez directement avec moi, du premier e-mail à la galerie finale.',
     'about.p3':'Si vous avez besoin de bonnes photos prises de façon fiable et professionnelle, contactez-moi.',
     'about.stat1':'Années d\'activité','about.stat2':'Clients satisfaits',
+    'about.fig':'Fig. 01 — En reportage, Montréal',
+    'band.a':'Planche contact — Sport / Événements / Personnes','band.b':'Planche contact — 2023 / 2026',
+    'interstitial.quote':'La lumière fait le travail. Je décide seulement où me placer.',
+    'interstitial.meta':'Montréal — disponible partout dans le monde',
     'about.manifesto':'« La photographie est un art de l’observation. Elle a peu à voir avec les choses que vous voyez et tout à voir avec la façon dont vous les voyez. » — Elliott Erwitt',
 
     'services.label':'Services','services.pricing.note':'Les tarifs sont établis au projet et varient d\'une séance à l\'autre — contactez-moi pour un devis adapté à votre projet.',
@@ -1359,6 +1667,7 @@ const translations = {
     'services.commercial.title':'COMMERCIAL',
     'services.commercial.desc':'Photos produit, campagnes de marque et portraits corporate. Je peux gérer toute la prise de vue — planification, direction sur place, post-production — ou m\'intégrer à votre équipe existante. Les conditions de licence sont fixées en amont.',
     'services.commercial.i1':'Révision du brief &amp; moodboard','services.commercial.i2':'Tarifs multi-jours disponibles','services.commercial.i4':'Post-production &amp; retouche','services.commercial.i5':'Licence commerciale complète',
+    'services.commercial.gallery':'Images sélectionnées — portfolio commercial complet sur demande',
     'process.label':'Comment ça marche',
     'process.s1.title':'Première prise de contact','process.s1.body':'Remplissez le formulaire de contact ou envoyez-moi un e-mail directement. Dites-moi globalement ce dont vous avez besoin — même une idée vague suffit pour commencer. Je vous répondrai dans les 24 heures.',
     'process.s2.title':'Consultation','process.s2.body':'Un rapide appel pour discuter de ce dont vous avez besoin, où et quand. On abordera la logistique, le rendu souhaité et le budget. Sans engagement — si ça ne correspond pas à l\'un ou l\'autre, pas de problème.',
@@ -1373,7 +1682,7 @@ const translations = {
     'contact.form.select':'— Sélectionner un service','contact.form.other':'Autre',
     'contact.form.message':'Votre message','contact.form.submit':'Envoyer la demande',
     'contact.form.note':'Toutes les demandes reçoivent une réponse personnelle.',
-    'gallery.note':'Plus d\'exemples disponibles sur demande.',
+    'gallery.note':'Plus d\'exemples disponibles sur demande.','gallery.view':'Voir +',
     'footer.copy':'© 2026 Mann Photography. Tous droits réservés. Montréal.',
   }
 };
@@ -1448,21 +1757,76 @@ document.addEventListener('keydown', e => {
 });
 
 document.querySelectorAll('.tab-gallery').forEach(gallery => {
-  const grid = gallery.querySelector('.gallery-grid');
-  if (grid) {
-    const note = document.createElement('p');
-    note.className = 'gallery-note visible';
-    note.setAttribute('data-i18n', 'gallery.note');
-    note.textContent = 'More examples available on request.';
-    gallery.appendChild(note);
-  }
-  const thumbs = gallery.querySelectorAll('.gallery-thumb img');
-  const srcs = Array.from(thumbs).map(img => img.src);
-  thumbs.forEach((img, i) => {
-    img.parentElement.style.cursor = 'pointer';
-    img.parentElement.addEventListener('click', () => openLightbox(srcs, i));
+  // galleries that already carry their own caveat line don't need the boilerplate
+  if (!gallery.querySelector('.gallery-grid') || gallery.querySelector('.gallery-header')) return;
+  const note = document.createElement('p');
+  note.className = 'gallery-note visible';
+  note.setAttribute('data-i18n', 'gallery.note');
+  note.textContent = 'More examples available on request.';
+  gallery.appendChild(note);
+});
+
+// ── PHOTO BANDS ──
+// The track is duplicated once so translateX(-50%) loops seamlessly.
+document.querySelectorAll('.photo-band .band-track').forEach(track => {
+  Array.from(track.children).forEach(frame => {
+    const clone = frame.cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    clone.dataset.clone = '';
+    track.appendChild(clone);
   });
 });
+
+// ── LIGHTBOX WIRING ──
+// Any container with data-lb-group turns its .js-lb frames into one set.
+const webpOK = document.createElement('canvas').toDataURL('image/webp').indexOf('data:image/webp') === 0;
+document.querySelectorAll('[data-lb-group]').forEach(group => {
+  const frames = Array.from(group.querySelectorAll('.js-lb'));
+  const originals = frames.filter(f => f.dataset.clone === undefined);
+  if (!originals.length) return;
+  const srcOf = f => {
+    const im = f.querySelector('img');
+    if (im.currentSrc) return im.currentSrc;
+    // frames below the fold haven't picked a source yet — resolve it ourselves
+    const source = webpOK && f.querySelector('source[type="image/webp"]');
+    return source ? new URL(source.srcset, document.baseURI).href : im.src;
+  };
+
+  frames.forEach((frame, i) => {
+    const index = i % originals.length;
+    const open = () => openLightbox(originals.map(srcOf), index);
+    frame.addEventListener('click', open);
+    if (frame.dataset.clone !== undefined) return;
+    const img = frame.querySelector('img');
+    frame.setAttribute('role', 'button');
+    frame.setAttribute('tabindex', '0');
+    frame.setAttribute('aria-label', img && img.alt ? img.alt : 'View photograph');
+    frame.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }
+    });
+  });
+});
+
+// ── INTERSTITIAL PARALLAX ──
+const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const plate = document.querySelector('.interstitial-img');
+if (plate && !prefersReduced) {
+  const section = plate.parentElement;
+  let ticking = false;
+  const update = () => {
+    const r = section.getBoundingClientRect();
+    if (r.bottom > 0 && r.top < window.innerHeight) {
+      const p = (r.top + r.height / 2 - window.innerHeight / 2) / window.innerHeight;
+      plate.style.transform = 'translate3d(0,' + (p * -8).toFixed(2) + '%,0)';
+    }
+    ticking = false;
+  };
+  window.addEventListener('scroll', () => {
+    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+  }, { passive: true });
+  window.addEventListener('resize', update, { passive: true });
+  update();
+}
 
 </script>
 </body>
