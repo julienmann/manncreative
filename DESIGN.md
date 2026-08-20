@@ -108,7 +108,7 @@ Three typefaces carry three entirely distinct roles: Bebas Neue is the wall voic
 An achromatic field — deep blacks, warm near-whites, and mid-tones that read as silver gelatin prints — pierced by a single amber note.
 
 ### Primary
-- **Darkroom Amber** (`#c4922a`): The structural, global accent. Used on section label underlines (2px), nav shadow (`rgba(196,146,42,0.25)`), manifesto border, and hero rule — wherever the accent isn't scoped to a specific service vertical. Never a background, never a fill, never used decoratively.
+- **Darkroom Amber** (`#c4922a`): The structural, global accent. Used on section label underlines (2px), nav shadow (`rgba(196,146,42,0.25)`), the scroll progress bar, and the hero rule (`rgba(196,146,42,0.45)`) — wherever the accent isn't scoped to a specific service vertical. Never a background, never a fill, never used decoratively.
 - **Vertical Accents**: Each service vertical carries one dedicated accent, used only within that vertical's own tab/gallery context (active tab indicator, tab-top border, gallery label underline) — never crossing into another vertical's markup, never used as fill:
   - **Sport — Rust** (`#b8552e`)
   - **Events — Wine** (`#6b3a44`)
@@ -120,7 +120,7 @@ An achromatic field — deep blacks, warm near-whites, and mid-tones that read a
 - **Paper White** (`#ffffff`): Primary foreground in dark mode; primary background in light mode. Used for all large typography, button fills, and primary interactive states.
 - **Silver Gelatin** (`#b0aba0`): The working mid-tone in dark mode. Supporting text, metadata, labels, navigation links at rest, body copy. Warm-tinted toward amber — not neutral gray, not cool gray.
 - **Press Gray** (`#888888`): The working mid-tone in light mode. Same role as Silver Gelatin but cooler.
-- **Contact Shadow** (`#111111`): Secondary surface in dark mode — the interior of stat boxes, secondary containers. Provides surface depth without shadows.
+- **Contact Shadow** (`#111111`): Secondary surface in dark mode — the interior of secondary containers such as the contact form column. Provides surface depth without shadows.
 - **Ivory Ground** (`#eeeeee`): Secondary surface in light mode. Mirrors Contact Shadow's structural role.
 
 ### Named Rules
@@ -138,11 +138,11 @@ An achromatic field — deep blacks, warm near-whites, and mid-tones that read a
 
 ### Hierarchy
 - **Display** (400, `clamp(7rem, 21vw, 22rem)`, line-height 0.82, letter-spacing -0.02em): The hero title only. Bebas Neue. The name "MANN" at this scale is the visual anchor of the entire page.
-- **Headline** (400, `clamp(3rem, 6vw, 6rem)`, line-height 0.95): Section headings ("JUST ME, A CAMERA, AND YOUR BRIEF"), contact headline. Bebas Neue. Structural, commanding.
+- **Headline** (400, `clamp(3rem, 6vw, 6rem)`, line-height 0.95): The contact headline ("GET IN TOUCH") and the process section heading. Bebas Neue. Structural, commanding.
 - **Title** (400, `clamp(2rem, 4vw, 3.5rem)`, line-height 1): Service titles, work list items, process steps. Bebas Neue. Still large, but interactive — these expand, these react.
-- **Body** (IBM Plex Mono, 300 weight, 0.88rem, line-height 1.9): All descriptive text — service descriptions, process explanations, about copy. Max line length 70ch.
+- **Body** (IBM Plex Mono, 300 weight, 0.88rem, line-height 1.9): All descriptive text — service descriptions, process explanations, contact details. Max line length 70ch.
 - **Label** (IBM Plex Mono, 400 weight, 0.62–0.72rem, letter-spacing 0.2em, uppercase): Navigation links, tab buttons, "What's included" headers, contact detail labels, all UI metadata. The typeface for anything that organizes or names.
-- **Serif Accent** (Playfair Display, italic, 1rem–1.6rem): The about signature ("— Julien Mann"), the manifesto quote, the hero typewriter phrases. Always italic. Never used for headings or labels.
+- **Serif Accent** (Playfair Display, italic, 1rem–1.6rem): The hero's "creative" counterword, the hero typewriter phrases, and the interstitial quote plate. Always italic. Never used for headings or labels.
 
 ### Named Rules
 **The Three-Register Rule.** Bebas for wall text. Mono for functional text. Playfair for human moments. Each register has a job and stays in it. No Bebas below title scale. No Playfair upright. No Mono in display positions.
@@ -153,17 +153,17 @@ An achromatic field — deep blacks, warm near-whites, and mid-tones that read a
 
 This system is flat by default, with one deliberate exception.
 
-All surface hierarchy is expressed through 1px hairline rules (`border: 1px solid rgba(--fg, 0.15)`) and background tonal steps (Void Black → Contact Shadow). No box-shadow for structural depth, no z-axis layering for content. A stat box is distinguished from its container by a shared hairline grid, not by a raised surface.
+All surface hierarchy is expressed through 1px hairline rules (`border: 1px solid rgba(--fg, 0.15)`) and background tonal steps (Void Black → Contact Shadow). No box-shadow for structural depth, no z-axis layering for content. A process row is distinguished from its neighbours by a shared hairline rule, not by a raised surface.
 
-The hover preview card (`.work-item:hover` floating thumbnail) floats at z-index 400, implying depth through position alone with no shadow. Two further exceptions exist, both scoped to a single editorial moment rather than general UI: the **About accent photos** (two small overlapping prints, rotated and shadowed — one breaking over the column rule above the stats grid, one over the bottom-left corner of the About figure) and the **Featured Strip** middle image (elevated above its neighbours in the five-image spread between About and Services). In all three cases the lift is contextual and ephemeral — it marks a deliberate "photograph as object" moment, not a permanent UI surface state.
+Exactly one exception exists, scoped to a single editorial moment rather than general UI: the **Featured Strip** middle image, elevated above its neighbours in the five-image spread between the contact sheet and Services. The lift is contextual — it marks a deliberate "photograph as object" moment, not a permanent UI surface state.
 
-Both About prints anchor to a real element — a grid, a figure — never to the bottom of a stretched column. A print floating in leftover space reads as a layout accident, not an object.
+A lifted print anchors to a real element — a grid, a figure — never to the bottom of a stretched column. A print floating in leftover space reads as a layout accident, not an object.
 
 ### Shadow Vocabulary
 - **Amber Nav Underlighting** (`box-shadow: 0 1px 0 0 rgba(196,146,42,0.25)`): Applied to the fixed navigation only. Not a depth signal — a structural accent that grounds the nav against the page surface.
 - **Lightbox Image Outline** (`box-shadow: 0 0 60px rgba(0,0,0,0.6)` + `outline: 2px solid rgba(255,255,255,0.8)`): Isolates the lightbox photograph in the overlay. Functional, not decorative.
-- **Photo-Object Lift** (`box-shadow: 0 14px 32px rgba(0,0,0,0.35)` on the About accent images; `0 18px 40px rgba(0,0,0,0.4)` on the Featured Strip's middle image): Used only on photographs presented as physical, overlapping prints — never on cards, containers, or UI chrome.
-- **Frame Edge** (`outline: 1px solid var(--rule); outline-offset: -1px`): Not a shadow at all — the hairline every photographic frame carries on its inside edge, so a dark photograph doesn't dissolve into the black field. Applied to gallery thumbs, band frames, hero sheet frames, contact strip frames, featured frames, and the About figure. It replaces elevation entirely for photographs that are not Photo-Object Lifts.
+- **Photo-Object Lift** (`box-shadow: 0 18px 40px rgba(0,0,0,0.4)` on the Featured Strip's middle image): Used only on a photograph presented as a physical print — never on cards, containers, or UI chrome.
+- **Frame Edge** (`outline: 1px solid var(--rule); outline-offset: -1px`): Not a shadow at all — the hairline every photographic frame carries on its inside edge, so a dark photograph doesn't dissolve into the black field. Applied to gallery thumbs, band frames, hero sheet frames, contact strip frames, and featured frames. It replaces elevation entirely for photographs that are not Photo-Object Lifts.
 
 ### Named Rules
 **The Hairline Rule.** Hierarchy comes from 1px rule lines and typographic scale — never from elevated surfaces or drop shadows on UI elements. The Photo-Object Lift exceptions above are the only places a photograph itself is allowed to cast a shadow; depth is earned, not decorative, and remains rare.
@@ -193,8 +193,6 @@ Not filled states — indicator lines only.
 
 The system avoids lifted cards. Content is organized through ruled grids.
 
-- **Stat Box:** No radius, no shadow, no background distinction. Hierarchy comes from the shared hairline grid (`border: 1px solid var(--rule)` on all sides, nested grid with shared borders removed). Padding 2.5rem 2rem.
-- **About Manifesto:** Double-border treatment — `border: 1px solid rgba(196,146,42,0.45)` (amber) plus `outline: 1px solid var(--rule)` at 5px offset. The only element in the system with an outline. Signals a quoted artifact, not a UI surface.
 - **Work List Items:** No background, no card. Content delimited by 1px border-bottom rule. The item expands in place.
 
 ### Inputs / Fields
@@ -258,15 +256,7 @@ Six frames in a 6-column row directly under the hero's bottom rule — evidence 
 
 ### Featured Strip
 
-Five frames between About and Services, bottom-aligned in layout and knocked off that line with `transform: translateY()` — never with margins, which would only inflate the row. The middle frame is the anchor: widest column, tallest ratio, and the one Photo-Object Lift. Captions sit under each frame in the same three-letter contact-sheet code as the galleries. Below 900px the offsets are removed and the strip becomes a plain two-up sheet.
-
-### Hover Preview Card
-
-The system's one lifted element.
-
-- **Size:** 220px wide, 3:4 aspect ratio.
-- **Behavior:** Follows cursor position (lagged 10% per frame). Appears when hovering a `.work-item[data-preview]`. Scales from 0.9 to 1.0 with slight derotation on entry.
-- **Style:** No border, no shadow — lift implied by fixed positioning and z-index alone.
+Five frames between the contact sheet and Services, bottom-aligned in layout and knocked off that line with `transform: translateY()` — never with margins, which would only inflate the row. The middle frame is the anchor: widest column, tallest ratio, and the one Photo-Object Lift. Captions sit under each frame in the same three-letter contact-sheet code as the galleries. Below 900px the offsets are removed and the strip becomes a plain two-up sheet.
 
 ## 6. Do's and Don'ts
 
@@ -276,7 +266,7 @@ The system's one lifted element.
 - **Do** reserve Playfair Display italic for quotes, signatures, and editorial asides — never for headings.
 - **Do** let the dark background carry the photographs. Every layout choice should step back from the images, not compete with them.
 - **Do** express hierarchy through 1px hairline rules and typographic scale. Use border-bottom / border-top, not box-shadow.
-- **Do** use Darkroom Amber and the four vertical accents on ≤10% of any screen, collectively: rule lines, indicators, the nav underlighting, the manifesto border. No more.
+- **Do** use Darkroom Amber and the four vertical accents on ≤10% of any screen, collectively: rule lines, indicators, the nav underlighting, the hero rule. No more.
 - **Do** scope each vertical accent strictly to that vertical's own tab/gallery DOM — never mix accents within one tab-content block.
 - **Do** let example photography render in full color at all times — the photographs are the system's color source; the chrome around them stays achromatic.
 - **Do** maintain zero border-radius on all interactive components — buttons, inputs, tabs, cards, form selects.
@@ -291,7 +281,7 @@ The system's one lifted element.
 ### Don't:
 - **Don't** use any accent color — amber or vertical — as a fill, a hover background, or a gradient component. The moment one fills a surface, the system loses its precision.
 - **Don't** introduce rounded corners on components. Not `4px`, not `border-radius: 4px "for friendliness"`. Zero radius is a load-bearing decision.
-- **Don't** add shadows to content cards, stat boxes, or section containers. Hairlines, not elevation — the only shadows in the system land on the three named Photo-Object Lift exceptions, never on UI chrome.
+- **Don't** add shadows to content cards or section containers. Hairlines, not elevation — the only shadow in the system lands on the single named Photo-Object Lift exception, never on UI chrome.
 - **Don't** use this site's visual language to reference soft stock-photo photography aesthetics — no script fonts, no warm pastel backgrounds, no "capturing your precious moments" energy.
 - **Don't** bring in SaaS/startup patterns: Inter or Geist fonts, blue or purple primary CTAs, white card grids with icon-heading-text repeated, metric highlight boxes. This is a photography portfolio.
 - **Don't** use dark neon, purple gradients, cyan glows, or glassmorphism — wrong register entirely.

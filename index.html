@@ -151,7 +151,7 @@ hr{border:none;border-top:1px solid var(--rule);margin:0;}
   position:relative;
   isolation:isolate;
 }
-.hero-img img,.about-accent-img img,.featured-img img{
+.hero-img img,.featured-img img{
   width:100%;height:100%;object-fit:cover;display:block;
 }
 .hero-img{
@@ -302,104 +302,6 @@ hr{border:none;border-top:1px solid var(--rule);margin:0;}
   }
 }
 .section-container{padding:0 3rem;max-width:1600px;margin:0 auto;}
-
-/* ── ABOUT ── */
-#about{padding:3rem 0;}
-.about-grid{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:0;
-}
-.about-left{
-  padding:2.5rem 3rem;
-  border-right:1px solid var(--rule);
-}
-.about-right{
-  padding:2.5rem 3rem;
-  position:relative;
-}
-.about-accent-img{
-  position:absolute;top:-2.75rem;left:-3.5rem;
-  width:8rem;aspect-ratio:3/4;
-  transform:rotate(-4deg);
-  box-shadow:0 14px 32px rgba(0,0,0,.35);
-  outline:1px solid var(--bg);
-  z-index:2;overflow:hidden;
-}
-.about-accent-img-2{
-  position:absolute;bottom:1.75rem;left:-3.5rem;
-  width:9.5rem;aspect-ratio:4/3;
-  transform:rotate(3.5deg);
-  box-shadow:0 14px 32px rgba(0,0,0,.35);
-  outline:1px solid var(--bg);
-  z-index:3;overflow:hidden;
-}
-.about-accent-img-2 img{width:100%;height:100%;object-fit:cover;display:block;}
-.about-figure{
-  margin-top:2.5rem;position:relative;
-}
-.about-figure-img{
-  aspect-ratio:16/9;overflow:hidden;
-}
-.about-figure-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease;}
-.about-figure:hover .about-figure-img img{transform:scale(1.04);}
-.about-figure figcaption{
-  margin-top:.55rem;
-  font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;color:var(--mid);
-}
-.about-headline{
-  font-family:var(--bebas);
-  font-size:clamp(3rem,6vw,6rem);
-  line-height:.95;
-  margin-bottom:3rem;
-}
-.about-body{
-  font-size:.9rem;color:var(--mid);line-height:1.95;
-}
-.about-body p+p{margin-top:1.2rem;}
-.about-sig{
-  font-family:var(--serif);font-style:italic;
-  font-size:1.6rem;margin-top:2.5rem;
-}
-
-.stats-grid{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:0;
-  border:1px solid var(--rule);
-}
-.stat-box{
-  padding:2.5rem 2rem;
-  border-right:1px solid var(--rule);
-  border-bottom:1px solid var(--rule);
-}
-.stat-box:nth-child(even){border-right:none;}
-.stat-box:nth-child(3),.stat-box:nth-child(4){border-bottom:none;}
-.stat-num{
-  font-family:var(--bebas);
-  font-size:clamp(3rem,5vw,5rem);
-  line-height:1;
-  display:block;
-}
-.stat-label{
-  font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--mid);margin-top:.5rem;display:block;
-}
-
-.about-manifesto{
-  margin-top:3rem;
-  padding:2rem;
-  border:1px solid rgba(196,146,42,.45);
-  outline:1px solid var(--rule);
-  outline-offset:5px;
-  font-family:var(--serif);font-style:italic;
-  font-size:1rem;line-height:1.8;color:var(--mid);
-  position:relative;
-}
-.about-manifesto::before{
-  content:'"';
-  font-size:5rem;line-height:.5;color:rgba(196,146,42,.3);
-  position:absolute;top:1.5rem;left:1.5rem;
-  font-family:var(--serif);
-}
 
 /* ── FEATURED STRIP ── */
 #featured-strip{padding:4rem 3rem 5rem;max-width:1600px;margin:0 auto;}
@@ -737,7 +639,7 @@ footer{
    dark photographs on a black field lose their own edges; a hairline
    inside the frame gives every print a boundary without adding depth */
 .gallery-thumb,.band-frame,.hero-sheet-frame,.contact-strip-frame,
-.featured-img,.about-figure-img{
+.featured-img{
   outline:1px solid var(--rule);
   outline-offset:-1px;
 }
@@ -862,10 +764,6 @@ footer{
   /* sections */
   .section-container,.section-header{padding-left:1.5rem;padding-right:1.5rem;}
 
-  /* about */
-  .about-grid{grid-template-columns:1fr;}
-  .about-left{border-right:none;border-bottom:1px solid var(--rule);padding:2rem 1.5rem;}
-  .about-right{padding:2rem 1.5rem;}
 
   /* services tabs */
   .services-pricing-note{padding:.9rem 1.5rem 0;}
@@ -876,7 +774,6 @@ footer{
   .tab-includes-col{padding:1.5rem 1.5rem;}
   .tab-gallery{padding:0 1.5rem 1.5rem;}
 
-  .about-accent-img,.about-accent-img-2{display:none;}
   #featured-strip{padding:2rem 1.5rem 2.5rem;}
   .featured-strip-grid{grid-template-columns:1fr 1fr;gap:.75rem;}
   .featured-item{transform:none;}
@@ -929,8 +826,7 @@ footer{
   .hero-title-top-word,.hero-title-by,.hero-title-main,.hero-title-inner{animation:none!important;transform:none!important;}
   .process-body,.gallery-grid{transition:none;}
   .gallery-thumb:hover img,.featured-img:hover img,
-  .hero-sheet-frame:hover img,.contact-strip-frame:hover img,
-  .about-figure:hover .about-figure-img img{transform:none;}
+  .hero-sheet-frame:hover img,.contact-strip-frame:hover img{transform:none;}
   #typewriter-text::after{animation:none;}
   .availability-dot{animation:none;}
   /* bands stop moving and become a hand-scrolled contact sheet instead */
@@ -954,7 +850,6 @@ footer{
   <div class="nav-inner">
     <a href="/" class="nav-logo scramble" data-text="JULIEN MANN">JULIEN MANN</a>
     <ul class="nav-links">
-      <li><a href="#about" class="scramble" data-text="About" data-i18n="nav.about">About</a></li>
       <li><a href="#services" class="scramble" data-text="Services" data-i18n="nav.services">Services</a></li>
       <li><a href="#process" class="scramble" data-text="Process" data-i18n="nav.process">Process</a></li>
       <li><a href="#contact" class="scramble" data-text="Contact" data-i18n="nav.contact">Contact</a></li>
@@ -1024,47 +919,6 @@ footer{
   </div>
 </section>
 
-<!-- ABOUT -->
-<section id="about">
-  <div class="section-header">
-    <span class="section-label" data-i18n="about.label">About</span>
-    <span class="section-num">01 / 04</span>
-  </div>
-  <div class="about-grid">
-    <div class="about-left reveal">
-      <h2 class="about-headline" data-i18n="about.headline">JUST ME,<br>A CAMERA,<br>AND YOUR<br>BRIEF</h2>
-      <div class="about-body">
-        <p data-i18n="about.p1">I'm Julien Mann — a photographer based in Montréal with three years of experience shooting events, portraits, sport, and travel work worldwide. I grew up around filmmakers and people in the industry, and learned early on what it takes to get a great shot.</p>
-        <p data-i18n="about.p2">I work on my own, which keeps things simple. No junior photographers, no account managers, you deal with me directly from the first email to the final gallery.</p>
-        <p data-i18n="about.p3">If you need good photos taken reliably and professionally, get in touch.</p>
-      </div>
-      <div class="about-sig">— Julien Mann</div>
-    </div>
-    <div class="about-right reveal">
-      <div class="about-accent-img" aria-hidden="true"><picture><source srcset="people%20examples/web-optimized/DSCF8359.webp" type="image/webp"><img src="people%20examples/web-optimized/DSCF8359.jpg" alt="" loading="lazy" width="1280" height="720"></picture></div>
-      <div class="stats-grid">
-        <div class="stat-box">
-          <span class="stat-num counter" data-target="3">0</span>
-          <span class="stat-label" data-i18n="about.stat1">Years Active</span>
-        </div>
-        <div class="stat-box">
-          <span class="stat-num counter" data-target="20">0</span>
-          <span class="stat-label" data-i18n="about.stat2">Happy Clients</span>
-        </div>
-
-      </div>
-      <div class="about-manifesto" data-i18n="about.manifesto">
-        "Photography is an art of observation. It has little to do with the things you see and everything to do with the way you see them." — Elliott Erwitt
-      </div>
-      <figure class="about-figure" data-lb-group="about">
-        <div class="about-figure-img js-lb"><picture><source srcset="sport%20examples/web-optimized/DSCF4981.webp" type="image/webp"><img src="sport%20examples/web-optimized/DSCF4981.jpg" alt="Sport photograph — on assignment" loading="lazy" width="1280" height="1021"></picture></div>
-        <div class="about-accent-img-2" aria-hidden="true"><picture><source srcset="event%20examples/web-optimized/DSCF9492.webp" type="image/webp"><img src="event%20examples/web-optimized/DSCF9492.jpg" alt="" loading="lazy" width="1280" height="854"></picture></div>
-        <figcaption data-i18n="about.fig">Fig. 01 — On assignment, Montréal</figcaption>
-      </figure>
-    </div>
-  </div>
-</section>
-
 <!-- FEATURED STRIP -->
 <section id="featured-strip" class="reveal">
   <div class="featured-strip-grid" data-lb-group="featured">
@@ -1095,7 +949,7 @@ footer{
 <section id="services">
   <div class="section-header">
     <span class="section-label" data-i18n="services.label">Services</span>
-    <span class="section-num">02 / 04</span>
+    <span class="section-num">01 / 03</span>
   </div>
 
   <div class="tabs-row">
@@ -1242,7 +1096,7 @@ footer{
 <section id="process">
   <div class="section-header">
     <span class="section-label" data-i18n="process.label">How It Works</span>
-    <span class="section-num">03 / 04</span>
+    <span class="section-num">02 / 03</span>
   </div>
   <ul class="process-list">
     <li class="process-item">
@@ -1314,7 +1168,7 @@ footer{
 <section id="contact">
   <div class="section-header">
     <span class="section-label" data-i18n="contact.label">Get in Touch</span>
-    <span class="section-num">04 / 04</span>
+    <span class="section-num">03 / 03</span>
   </div>
   <div class="contact-grid">
     <div class="contact-left reveal">
@@ -1485,23 +1339,6 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
   });
 });
 
-// ── COUNTER ──
-function animCounter(el){
-  const target=+el.dataset.target;
-  const dur=1400;const step=16;
-  const inc=target/(dur/step);
-  let cur=0;
-  const t=setInterval(()=>{
-    cur=Math.min(cur+inc,target);
-    el.textContent=Math.floor(cur)+'+';
-    if(cur>=target)clearInterval(t);
-  },step);
-}
-const counterObs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){animCounter(e.target);counterObs.unobserve(e.target);}});
-},{threshold:.5});
-document.querySelectorAll('.counter').forEach(el=>counterObs.observe(el));
-
 // ── REVEAL ON SCROLL ──
 const revObs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
@@ -1585,19 +1422,11 @@ function handleSubmit(e){
 // ── LANGUAGE TOGGLE ──
 const translations = {
   en: {
-    'nav.about':'About','nav.services':'Services','nav.process':'Process',
+    'nav.services':'Services','nav.process':'Process',
     'nav.contact':'Contact','nav.cta':'Book Now',
     'hero.kicker':'Montréal',
     'hero.desc':'Photography for people, sport, and brands.<br>Portraits, events &amp; commercial.',
     'hero.meta':'Available 2026<br>3 Years Active<br>20+ Happy Clients<br><br>↓ Scroll to explore',
-    'about.label':'About',
-    'about.headline':'JUST ME,<br>A CAMERA,<br>AND YOUR<br>BRIEF',
-    'about.p1':'I\'m Julien Mann — a photographer based in Montréal with three years of experience shooting events, portraits, sport, and travel work worldwide. I grew up around filmmakers and people in the industry, and learned early on what it takes to get a great shot.',
-    'about.p2':'I work on my own, which keeps things simple. No junior photographers, no account managers, you deal with me directly from the first email to the final gallery.',
-    'about.p3':'If you need good photos taken reliably and professionally, get in touch.',
-    'about.stat1':'Years Active','about.stat2':'Happy Clients',
-    'about.fig':'Fig. 01 — On assignment, Montréal',
-    'about.manifesto':'"Photography is an art of observation. It has little to do with the things you see and everything to do with the way you see them." — Elliott Erwitt',
     'band.a':'Contact sheet — Sport / Events / People','band.b':'Contact sheet — 2023 / 2026',
     'interstitial.quote':'Light does the work. I just decide where to stand.',
     'interstitial.meta':'Montréal — available worldwide',
@@ -1635,22 +1464,14 @@ const translations = {
     'footer.copy':'© 2026 Mann Photography. All rights reserved. Montréal.',
   },
   fr: {
-    'nav.about':'À propos','nav.services':'Services','nav.process':'Processus',
+    'nav.services':'Services','nav.process':'Processus',
     'nav.contact':'Contact','nav.cta':'Réserver',
     'hero.kicker':'Montréal',
     'hero.desc':'Photographie pour les personnes, le sport et les marques.<br>Portraits, événements &amp; commercial.',
     'hero.meta':'Disponible 2026<br>3 ans d\'activité<br>20+ clients satisfaits<br><br>↓ Défiler pour explorer',
-    'about.label':'À propos',
-    'about.headline':'MOI, UN<br>APPAREIL,<br>ET VOTRE<br>BRIEF',
-    'about.p1':'Je suis Julien Mann — photographe basé à Montréal avec trois ans d\'expérience dans les événements, portraits, sport et reportages de voyage à travers le monde. J\'ai grandi entouré de cinéastes et de professionnels du milieu, et j\'ai appris tôt ce qu\'il faut pour obtenir une excellente photo.',
-    'about.p2':'Je travaille seul, ce qui simplifie les choses. Pas de photographes juniors, pas de personnes intermédiaires, vous communiquez directement avec moi, du premier e-mail à la galerie finale.',
-    'about.p3':'Si vous avez besoin de bonnes photos prises de façon fiable et professionnelle, contactez-moi.',
-    'about.stat1':'Années d\'activité','about.stat2':'Clients satisfaits',
-    'about.fig':'Fig. 01 — En reportage, Montréal',
     'band.a':'Planche contact — Sport / Événements / Personnes','band.b':'Planche contact — 2023 / 2026',
     'interstitial.quote':'La lumière fait le travail. Je décide seulement où me placer.',
     'interstitial.meta':'Montréal — disponible partout dans le monde',
-    'about.manifesto':'« La photographie est un art de l’observation. Elle a peu à voir avec les choses que vous voyez et tout à voir avec la façon dont vous les voyez. » — Elliott Erwitt',
 
     'services.label':'Services','services.pricing.note':'Les tarifs sont établis au projet et varient d\'une séance à l\'autre — contactez-moi pour un devis adapté à votre projet.',
     'services.tab.portraits':'Personnes','services.tab.events':'Événements','services.tab.sport':'Sport','services.tab.commercial':'Commercial',
